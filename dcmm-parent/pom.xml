@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.mjeu</groupId>
+	<artifactId>dcmm-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>dcmm-parent</name>
+	<description>This is a DICOM Manager project.</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </parent>
+  
+  	<repositories>
+		<repository>
+    		<id>www.dcm4che.org</id>
+    		<name>dcm4che Repository</name>
+    		<url>http://www.dcm4che.org/maven2</url>
+		</repository>
+	</repositories>
+  
+	<dependencies>
+		<!-- dcm4che -->
+		<dependency> 
+    		<groupId>org.dcm4che</groupId>
+    		<artifactId>dcm4che-core</artifactId>
+    		<version>5.18.1</version>
+    		<exclusions>
+			    <exclusion>
+			    	<groupId>org.slf4j</groupId>
+        			<artifactId>slf4j-log4j12</artifactId>
+        		</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+	
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
