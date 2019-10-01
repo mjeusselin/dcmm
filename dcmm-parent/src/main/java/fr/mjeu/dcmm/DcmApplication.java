@@ -10,9 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class DcmManagerApplication {
+public class DcmApplication {
 	
-	static Logger logger = LoggerFactory.getLogger(DcmManagerApplication.class);
+	static Logger logger = LoggerFactory.getLogger(DcmApplication.class);
 	
 	@Value( "${data.element.tag}" )
 	private String dataElementTag;
@@ -21,7 +21,7 @@ public class DcmManagerApplication {
 	private String dataValueField;
 	
 	public static void main(String[] args) {
-        SpringApplication.run(DcmManagerApplication.class, args);
+        SpringApplication.run(DcmApplication.class, args);
     }
 
     @Bean
