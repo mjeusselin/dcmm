@@ -1,4 +1,4 @@
-package util;
+package fr.mjeu.dcmm.util;
 
 import static org.junit.Assert.fail;
 
@@ -11,19 +11,12 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
+import fr.mjeu.dcmm.DcmTest;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.util.CheckerUtil;
 
-public class CheckerUtilTest {
-	
-	private static String ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR = "Unable to get absolute path string of test resource : ";
-	private static String S = File.separator;
-	private static String PATH_STR_FOLDER_EXISTS_OK = "util";
-	private static String PATH_STR_FOLDER_DOES_NOT_EXIST_KO = "utilDoesNotExist";
-	private static String PATH_STR_FILE_EXISTS_OK = "file.dcm";
-	private static String PATH_STR_FILE_DOES_NOT_EXIST_KO = "fileDoesNotExist.dcm";
-	private static String RELATIVE_TEST_RESOURCES_PATH = ".."+S+".."+S+".."+S+"src"+S+"test"+S+"resources"+S;
+public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckNotEmpty_OK() {
@@ -186,31 +179,6 @@ public class CheckerUtilTest {
 		} catch (CheckerException c) {
 			// nothing
 		}
-	}
-	
-	/**
-	 * Get absolute path string for test resources
-	 * @param resource
-	 * @throws DcmException 
-	 */
-	private String getAbsolutePathStringOfTestResource(String resource) throws DcmException {
-		StringBuilder sb = new StringBuilder();
-		
-		try {
-			URI currentURI = CheckerUtilTest.class.getResource(".").toURI();
-			URI resolvedURI = currentURI.resolve(RELATIVE_TEST_RESOURCES_PATH);
-			if(resolvedURI == null) {
-				throw new DcmException(ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR + resource);
-			}
-			sb.append(resolvedURI.getPath()).append(resource);
-		} catch (DcmException d) {
-			throw d;
-		} catch (Exception e) {
-			throw new DcmException(ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR + resource, e);
-		}
-		return sb.toString();
-		
-		
 	}
 
 }
