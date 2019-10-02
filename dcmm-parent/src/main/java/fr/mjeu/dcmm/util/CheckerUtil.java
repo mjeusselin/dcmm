@@ -17,21 +17,6 @@ import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 public class CheckerUtil {
 
 	/**
-	 * Compare object with null
-	 * @param o the object
-	 * @throws CheckerException
-	 */
-	public static void checkNotNull(Object o) throws CheckerException {
-		
-		if(o == null) {
-			
-			throw new CheckerException(DcmExceptionMessage.ERROR_NULL.getMessage());
-			
-		}
-		
-	}
-	
-	/**
 	 * Compare String object to empty string or null
 	 * @param s the string
 	 * @throws CheckerException
@@ -47,6 +32,21 @@ public class CheckerUtil {
 	}
 	
 	/**
+	 * Compare object with null
+	 * @param o the object
+	 * @throws CheckerException
+	 */
+	public static void checkNotNull(Object o) throws CheckerException {
+		
+		if(o == null) {
+			
+			throw new CheckerException(DcmExceptionMessage.ERROR_NULL.getMessage());
+			
+		}
+		
+	}
+	
+	/**
 	 * Check if file exists and is readable and writable
 	 * @param folderPathStr string path of the parent folder
 	 * @param filename filename
@@ -54,6 +54,9 @@ public class CheckerUtil {
 	 * @throws CheckerException
 	 */
 	public static Path checkFileExists(String folderPathStr, String filename) throws CheckerException {
+		
+		CheckerUtil.checkNotEmpty(folderPathStr);
+		CheckerUtil.checkNotEmpty(filename);
 		
 		Path p = DcmFileUtil.getPath(folderPathStr, filename);
 		File f = null;
@@ -84,6 +87,8 @@ public class CheckerUtil {
 	 * @throws CheckerException
 	 */
 	public static Path checkFolderExists(String folderPathStr) throws CheckerException {
+		
+		CheckerUtil.checkNotEmpty(folderPathStr);
 		
 		Path p = DcmFileUtil.getPath(folderPathStr);
 		File d = null;
