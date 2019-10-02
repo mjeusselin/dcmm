@@ -70,7 +70,7 @@ public class CheckerUtilTest extends DcmTest {
 	public void testCheckFileExists_OK() throws DcmException {
 		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
-			CheckerUtil.checkFileExists(folderPathStr, PATH_STR_FILE_EXISTS_OK);
+			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_EXISTS_OK);
 		} catch (CheckerException c) {
 			fail();
 		}
@@ -80,7 +80,7 @@ public class CheckerUtilTest extends DcmTest {
 	public void testCheckFileExists_file_not_exists_KO() throws DcmException {
 		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
-			CheckerUtil.checkFileExists(folderPathStr, PATH_STR_FILE_DOES_NOT_EXIST_KO);
+			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
@@ -91,7 +91,7 @@ public class CheckerUtilTest extends DcmTest {
 	public void testCheckFileExists_folder_not_exists_KO() throws DcmException {
 		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_DOES_NOT_EXIST_KO);
 		try {
-			CheckerUtil.checkFileExists(folderPathStr, PATH_STR_FILE_EXISTS_OK);
+			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_EXISTS_OK);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
@@ -123,7 +123,7 @@ public class CheckerUtilTest extends DcmTest {
 	@Test
 	public void testCheckFileExists_folder_null_KO() throws DcmException {
 		try {
-			CheckerUtil.checkFileExists(null, PATH_STR_FILE_EXISTS_OK);
+			CheckerUtil.checkFileExists(null, FILENAME_FILE_EXISTS_OK);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
@@ -133,7 +133,46 @@ public class CheckerUtilTest extends DcmTest {
 	@Test
 	public void testCheckFileExists_folder_empty_KO() throws DcmException {
 		try {
-			CheckerUtil.checkFileExists(null, PATH_STR_FILE_EXISTS_OK);
+			CheckerUtil.checkFileExists(null, FILENAME_FILE_EXISTS_OK);
+			fail();
+		} catch (CheckerException c) {
+			// nothing
+		}
+	}
+	
+	@Test
+	public void testCheckFilenameDcmExtension_OK() throws DcmException {
+		try {
+			CheckerUtil.checkFilenameDcmExtension(FILENAME_EXTENSION_DCM_OK);
+		} catch (CheckerException c) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testCheckFilenameDcmExtension_wrong_KO() throws DcmException {
+		try {
+			CheckerUtil.checkFilenameDcmExtension(FILENAME_EXTENSION_DCM_KO);
+			fail();
+		} catch (CheckerException c) {
+			// nothing
+		}
+	}
+	
+	@Test
+	public void testCheckFilenameDcmExtension_null_KO() throws DcmException {
+		try {
+			CheckerUtil.checkFilenameDcmExtension(null);
+			fail();
+		} catch (CheckerException c) {
+			// nothing
+		}
+	}
+	
+	@Test
+	public void testCheckFilenameDcmExtension_empty_KO() throws DcmException {
+		try {
+			CheckerUtil.checkFilenameDcmExtension("");
 			fail();
 		} catch (CheckerException c) {
 			// nothing

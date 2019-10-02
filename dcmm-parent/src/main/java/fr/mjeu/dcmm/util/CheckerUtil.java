@@ -15,6 +15,8 @@ import fr.mjeu.dcmm.exception.DcmExceptionMessage;
  *
  */
 public class CheckerUtil {
+	
+	public static final String DCM_EXTENSION = ".dcm";
 
 	/**
 	 * Compare String object to empty string or null
@@ -59,24 +61,52 @@ public class CheckerUtil {
 		CheckerUtil.checkNotEmpty(filename);
 		
 		Path p = DcmFileUtil.getPath(folderPathStr, filename);
-		File f = null;
 		
-		if(p != null) {
-			f = p.toFile();
-		}
+		checkFileExistsFromPath(p);
+		
+		return p;
+		
+	}
+	
+	/**
+	 * Check if file exists and is readable and writable
+	 * @param p Path object corresponding to file
+	 * @throws CheckerException
+	 */
+	public static void checkFileExistsFromPath(Path p) throws CheckerException {
+		
+		CheckerUtil.checkNotNull(p);
+		
+		File f = null;
+		f = p.toFile();
 		
 		if(f == null || !f.exists() || f.isDirectory() || !f.canRead() || !f.canWrite()) {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append(DcmExceptionMessage.ERROR_FILE_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE.getMessage())
-				.append(folderPathStr)
-				.append(File.separator)
-				.append(filename);
+				.append(p.toString());
 			throw new CheckerException(sb.toString());
 			
 		}
 		
-		return p;
+	}
+	
+	/**
+	 * Check file name with DICOM extension
+	 * @param filename the filename
+	 * @throws CheckerException
+	 */
+	public static void checkFilenameDcmExtension(String filename) throws CheckerException {
+		
+		CheckerUtil.checkNotNull(filename);
+		CheckerUtil.checkNotEmpty(filename);
+		
+		if(!filename.endsWith(DCM_EXTENSION)) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(DcmExceptionMessage.ERROR_FILENAME_EXTENSION_DCM.getMessage())
+				.append(filename);
+			throw new CheckerException(sb.toString());
+		}
 		
 	}
 	
