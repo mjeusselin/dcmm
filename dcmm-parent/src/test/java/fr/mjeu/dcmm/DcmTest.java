@@ -20,8 +20,8 @@ public class DcmTest {
 	protected static String FILENAME_FILE_EXISTS_OK = "file.dcm";
 	protected static String FILENAME_FILE_DOES_NOT_EXIST_KO = "fileDoesNotExist.dcm";
 	protected static String FILENAME_EXAMPLE_LOGO = "herami-logo.png";
-	protected static String PATH_STR_FOLDER_EXAMPLES_OK = "in"+S+"phantoms-2d";
-	protected static String PATH_STR_FOLDER_EXAMPLES_IMAGES = "in"+S+"images";
+	protected static String PATH_STR_FOLDER_EXAMPLES_OK = "in"+S+"phantoms-2d"+S;
+	protected static String PATH_STR_FOLDER_EXAMPLES_IMAGES = "in"+S+"images"+S;
 	protected static String PATH_STR_FOLDER_EXISTS_OK = "util";
 	protected static String PATH_STR_FOLDER_DOES_NOT_EXIST_KO = "utilDoesNotExist";
 	protected static String RELATIVE_TEST_RESOURCES_PATH = ".."+S+".."+S+".."+S+".."+S+".."+S+".."+S+"src"+S+"test"+S+"resources"+S;
@@ -32,19 +32,35 @@ public class DcmTest {
 	 * @throws DcmException 
 	 */
 	protected String getAbsolutePathStringOfTestResource(String resource) throws DcmException {
+		
+		return getAbsolutePathStringFromTestClassLoader(RELATIVE_TEST_RESOURCES_PATH, resource);
+		
+	}
+	
+	/**
+	 * Get absolute path string for test resources
+	 * @param resource
+	 * @throws DcmException 
+	 */
+	protected static String getAbsolutePathStringFromTestClassLoader(String testRelativePathFolder, String resource) throws DcmException {
+		StringBuilder sbError = new StringBuilder();
+		sbError.append(ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR)
+			.append(testRelativePathFolder)
+			.append(resource);
+		
 		StringBuilder sb = new StringBuilder();
 		
 		try {
 			URI currentURI = CheckerUtilTest.class.getResource(".").toURI();
-			URI resolvedURI = currentURI.resolve(RELATIVE_TEST_RESOURCES_PATH);
+			URI resolvedURI = currentURI.resolve(testRelativePathFolder);
 			if(resolvedURI == null) {
-				throw new DcmException(ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR + resource);
+				throw new DcmException(sbError.toString());
 			}
 			sb.append(resolvedURI.getPath()).append(resource);
 		} catch (DcmException d) {
 			throw d;
 		} catch (Exception e) {
-			throw new DcmException(ERROR_UNABLE_TO_GET_ABSOLUTE_PATH_STR + resource, e);
+			throw new DcmException(sbError.toString(), e);
 		}
 		return sb.toString();
 		

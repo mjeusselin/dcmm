@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import org.dcm4che3.data.Attributes;
 import org.junit.jupiter.api.Test;
 
-import fr.mjeu.dcmm.DcmTest;
+import fr.mjeu.dcmm.DcmPrepareTest;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 
@@ -17,7 +17,7 @@ import fr.mjeu.dcmm.exception.DcmException;
  * @author Maxime
  *
  */
-public class DcmUtilTest extends DcmTest {
+public class DcmUtilTest extends DcmPrepareTest {
 	
 	@Test
 	public void testReadDcmMetadata_OK() throws DcmException {
