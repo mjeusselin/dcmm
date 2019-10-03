@@ -2,7 +2,10 @@ package fr.mjeu.dcmm.util;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.nio.file.Path;
 
 import org.dcm4che3.data.Attributes;
 import org.junit.jupiter.api.Test;
@@ -80,6 +83,24 @@ public class DcmUtilTest extends DcmPrepareTest {
 		
 		assertNull(testAttributes);
 	
+	}
+	
+	@Test
+	public void writeDcmMetadata_OK() throws DcmException {
+		
+		Attributes testAttributes = null;
+		boolean writtenMetadata = false;
+		
+		try {
+			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			testAttributes = DcmUtil.readDcmMetadata(testFilePath);
+			writtenMetadata = DcmUtil.writeDcmMetadata(testAttributes, testFilePath);
+		} catch (CheckerException c) {
+			fail();
+		}
+		
+		assertTrue(writtenMetadata);
+		
 	}
 	
 	
