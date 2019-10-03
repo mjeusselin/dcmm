@@ -16,6 +16,7 @@ public enum DcmExceptionMessage {
 	ERROR_FOLDER_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE("Folder doesn't exist or is not readable / writable : "),
 	ERROR_GLOBAL("An error has happened."),
 	ERROR_INPUT_STREAM_CLOSE("Error closing input stream."),
+	ERROR_INVALID_PATH_EXCEPTION("Path str is not valid : "),
 	ERROR_NULL("Object is null."),
 	ERROR_NULL_OR_EMPTY("String is null or empty."),
 	ERROR_OUTPUT_STREAM_CLOSE("Error closing output stream."),

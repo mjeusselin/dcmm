@@ -2,19 +2,13 @@ package fr.mjeu.dcmm.util;
 
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
 import fr.mjeu.dcmm.DcmTest;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
-import fr.mjeu.dcmm.util.CheckerUtil;
 
 public class CheckerUtilTest extends DcmTest {
 	
@@ -134,6 +128,39 @@ public class CheckerUtilTest extends DcmTest {
 	public void testCheckFileExists_folder_empty_KO() throws DcmException {
 		try {
 			CheckerUtil.checkFileExists(null, FILENAME_FILE_EXISTS_OK);
+			fail();
+		} catch (CheckerException c) {
+			// nothing
+		}
+	}
+	
+	@Test
+	public void testCheckFileExistsFromPath_OK() throws DcmException {
+		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_EXISTS_OK);
+		try {
+			CheckerUtil.checkFileExistsFromPath(p);
+		} catch (CheckerException c) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testCheckFileExistsFromPath_file_not_exists_KO() throws DcmException {
+		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
+		try {
+			CheckerUtil.checkFileExistsFromPath(p);
+			fail();
+		} catch (CheckerException c) {
+			// nothing
+		}
+	}
+	
+	@Test
+	public void testCheckFileExistsFromPath_path_null_KO() throws DcmException {
+		try {
+			CheckerUtil.checkFileExistsFromPath(null);
 			fail();
 		} catch (CheckerException c) {
 			// nothing

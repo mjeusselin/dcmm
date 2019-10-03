@@ -2,7 +2,11 @@ package fr.mjeu.dcmm.util;
 
 import java.io.File;
 import java.nio.file.FileSystems;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+
+import fr.mjeu.dcmm.exception.DcmException;
+import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 
 /**
  * DICOM file util class
@@ -34,7 +38,7 @@ public class DcmFileUtil {
 	 * @param path the path
 	 * @return file file corresponding to the path
 	 */
-	public static File getFileFromPathStr(String pathStr) {
+	public static File getFileFromPathStr(String pathStr) throws DcmException {
 		
 		File f = null;
 		Path p = getPath(pathStr);
@@ -52,9 +56,22 @@ public class DcmFileUtil {
 	 * @param absoluteFolderPathString absolute folder path string
 	 * @return Path object
 	 */
-	public static Path getPath(String absoluteFolderPathString) {
+	public static Path getPath(String absoluteFolderPathString) throws DcmException {
 		
-		return FileSystems.getDefault().getPath(absoluteFolderPathString);
+		Path p = null;
+		
+		CheckerUtil.checkNotEmpty(absoluteFolderPathString);
+		
+		try {
+			p = FileSystems.getDefault().getPath(absoluteFolderPathString);
+		} catch (InvalidPathException ipe) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(DcmExceptionMessage.ERROR_INVALID_PATH_EXCEPTION)
+				.append(absoluteFolderPathString);
+			throw new DcmException(sb.toString(), ipe);
+		}
+		
+		return p;
 		
 	}
 	
@@ -64,10 +81,23 @@ public class DcmFileUtil {
 	 * @param filename
 	 * @return Path object
 	 */
-	public static Path getPath(String absoluteFolderPathString, String filename) {
+	public static Path getPath(String absoluteFolderPathString, String filename) throws DcmException {
 		
-		return FileSystems.getDefault().getPath(absoluteFolderPathString, filename);
+		Path p = null;
 		
+		CheckerUtil.checkNotEmpty(absoluteFolderPathString);
+		CheckerUtil.checkNotEmpty(filename);
+		
+		try {
+			p = FileSystems.getDefault().getPath(absoluteFolderPathString, filename);
+		} catch (InvalidPathException ipe) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(DcmExceptionMessage.ERROR_INVALID_PATH_EXCEPTION)
+				.append(absoluteFolderPathString);
+			throw new DcmException(sb.toString(), ipe);
+		}
+		
+		return p;
 	}
 	
 	

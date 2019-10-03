@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import org.springframework.util.StringUtils;
 
 import fr.mjeu.dcmm.exception.CheckerException;
+import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 
 /**
@@ -60,7 +61,16 @@ public class CheckerUtil {
 		CheckerUtil.checkNotEmpty(folderPathStr);
 		CheckerUtil.checkNotEmpty(filename);
 		
-		Path p = DcmFileUtil.getPath(folderPathStr, filename);
+		Path p = null;
+		StringBuilder sb = new StringBuilder();
+		sb.append(DcmExceptionMessage.ERROR_FOLDER_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE.getMessage())
+			.append(folderPathStr);
+		
+		try {
+			p = DcmFileUtil.getPath(folderPathStr, filename);
+		} catch (DcmException de){
+			throw new CheckerException(sb.toString());
+		}
 		
 		checkFileExistsFromPath(p);
 		
@@ -120,7 +130,16 @@ public class CheckerUtil {
 		
 		CheckerUtil.checkNotEmpty(folderPathStr);
 		
-		Path p = DcmFileUtil.getPath(folderPathStr);
+		Path p = null;
+		StringBuilder sb = new StringBuilder();
+		sb.append(DcmExceptionMessage.ERROR_FOLDER_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE.getMessage())
+			.append(folderPathStr);
+		
+		try {
+			p = DcmFileUtil.getPath(folderPathStr);
+		} catch (DcmException de){
+			throw new CheckerException(sb.toString());
+		}
 		File d = null;
 		
 		if(p != null) {
@@ -128,12 +147,7 @@ public class CheckerUtil {
 		}
 		
 		if(d == null || !d.exists() || !d.isDirectory() || !d.canRead() || !d.canWrite()) {
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(DcmExceptionMessage.ERROR_FOLDER_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE.getMessage())
-				.append(folderPathStr);
 			throw new CheckerException(sb.toString());
-			
 		}
 		
 		return p;
