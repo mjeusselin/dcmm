@@ -21,7 +21,7 @@ public class DcmUtilTest extends DcmPrepareTest {
 	
 	@Test
 	public void testReadDcmMetadata_OK() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
 		
 		Attributes testAttributes = null;
 		try {
@@ -51,7 +51,7 @@ public class DcmUtilTest extends DcmPrepareTest {
 	@Test
 	public void testReadDcmMetadata_file_not_exists_KO() throws DcmException {
 		
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
 		
 		Attributes testAttributes = null;
 		try {
@@ -68,7 +68,7 @@ public class DcmUtilTest extends DcmPrepareTest {
 	@Test
 	public void testReadDcmMetadata_wrong_file_KO() throws DcmException {
 		
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_IMAGES);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_IMAGES);
 		
 		Attributes testAttributes = null;
 		try {

@@ -62,7 +62,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExists_OK() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
 			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_EXISTS_OK);
 		} catch (CheckerException c) {
@@ -72,7 +72,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExists_file_not_exists_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
 			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 			fail();
@@ -83,7 +83,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExists_folder_not_exists_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_DOES_NOT_EXIST_KO);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_DOES_NOT_EXIST_KO);
 		try {
 			CheckerUtil.checkFileExists(folderPathStr, FILENAME_FILE_EXISTS_OK);
 			fail();
@@ -94,7 +94,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExists_file_null_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
 			CheckerUtil.checkFileExists(folderPathStr, null);
 			fail();
@@ -105,7 +105,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExists_file_empty_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
 			CheckerUtil.checkFileExists(folderPathStr, "");
 			fail();
@@ -136,7 +136,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExistsFromPath_OK() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_EXISTS_OK);
 		try {
 			CheckerUtil.checkFileExistsFromPath(p);
@@ -147,7 +147,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFileExistsFromPath_file_not_exists_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 		try {
 			CheckerUtil.checkFileExistsFromPath(p);
@@ -208,7 +208,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFolderExists_OK() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		try {
 			CheckerUtil.checkFolderExists(folderPathStr);
 		} catch (CheckerException c) {
@@ -218,7 +218,7 @@ public class CheckerUtilTest extends DcmTest {
 	
 	@Test
 	public void testCheckFolderExists_not_exists_KO() throws DcmException {
-		String folderPathStr = this.getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_DOES_NOT_EXIST_KO);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_DOES_NOT_EXIST_KO);
 		try {
 			CheckerUtil.checkFolderExists(folderPathStr);
 			fail();
