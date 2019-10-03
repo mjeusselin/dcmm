@@ -31,7 +31,7 @@ public class DcmTest {
 	 * @param resource
 	 * @throws DcmException 
 	 */
-	protected String getAbsolutePathStringOfTestResource(String resource) throws DcmException {
+	protected static String getAbsolutePathStringOfTestResource(String resource) throws DcmException {
 		
 		return getAbsolutePathStringFromTestClassLoader(RELATIVE_TEST_RESOURCES_PATH, resource);
 		
