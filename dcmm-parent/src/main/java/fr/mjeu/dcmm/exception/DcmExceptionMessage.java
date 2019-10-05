@@ -8,6 +8,7 @@ package fr.mjeu.dcmm.exception;
  */
 public enum DcmExceptionMessage {
 	ERROR_ATTRIBUTES_NULL("Attributes are null."),
+	ERROR_DCM_UNIT_NOT_VALID("DcmUnit not valid."),
 	ERROR_FILENAME_EXTENSION_DCM("File format of this filename is not recognized : "),
 	ERROR_FILE_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE("File doesn't exist or is not readable / writable : "),
 	ERROR_FILE_NULL("File is null : "),

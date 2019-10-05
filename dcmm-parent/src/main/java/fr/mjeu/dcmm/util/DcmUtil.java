@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.dcm4che3.data.Attributes;
 import org.dcm4che3.io.DicomInputStream;
 import org.dcm4che3.io.DicomOutputStream;
 
+import fr.mjeu.dcmm.DcmUnit;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 
@@ -20,17 +20,17 @@ import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 public class DcmUtil {
 	
 	/**
-	 * Get Dcm information from DICOM path
+	 * Get DcmUnit from DICOM path
 	 * @param p
 	 * @return
 	 */
-	public static Attributes readDcmMetadata(Path p) throws DcmException {
+	public static DcmUnit readDcm(Path p) throws DcmException {
 		
 		CheckerUtil.checkFileExistsFromPath(p);
 		CheckerUtil.checkFilenameDcmExtension(p.getFileName().toString());
 		
 		File f = DcmFileUtil.getFileFromPath(p);
-		Attributes attributes = null;
+		DcmUnit dcmUnit = new DcmUnit();
 		DicomInputStream dis = null;
 		
 		if(f != null) {
@@ -39,8 +39,8 @@ public class DcmUtil {
 				dis = new DicomInputStream(f);
 				if(dis != null) {
 					
-					// read metadata except metadata information
-					attributes = dis.readDataset(-1, -1);
+					dcmUnit.setDataset(dis.readDataset(-1, -1));
+					dcmUnit.setFmi(dis.getFileMetaInformation());
 				}
 				
 			} catch (IOException ie) {
@@ -70,7 +70,7 @@ public class DcmUtil {
 			throw new DcmException(sb.toString());
 		}
 		
-		return attributes;
+		return dcmUnit;
 	}
 	
 	/**
@@ -78,15 +78,16 @@ public class DcmUtil {
 	 * @param a attributes
 	 * @param p Path object 
 	 */
-	public static boolean writeDcmMetadata(Attributes a, Path p) throws DcmException {
+	public static boolean writeDcm(DcmUnit dcmU, Path p) throws DcmException {
 		
 		if(p == null) {
 			throw new DcmException(DcmExceptionMessage.ERROR_PATH_NULL.getMessage());
 		}
 		
-		if(a == null) {
-			throw new DcmException(DcmExceptionMessage.ERROR_ATTRIBUTES_NULL.getMessage());
+		if(dcmU == null || dcmU.getDataset() == null || dcmU.getFmi() == null) {
+			throw new DcmException(DcmExceptionMessage.ERROR_DCM_UNIT_NOT_VALID.getMessage());
 		}
+		 
 		
 		boolean metadataWritten = false;
 		File f = DcmFileUtil.getFileFromPath(p);
@@ -98,8 +99,7 @@ public class DcmUtil {
 				dos = new DicomOutputStream(f);
 				if(dos != null) {
 					
-					// read metadata except metadata information
-					a.writeTo(dos);
+					dos.writeDataset(dcmU.getFmi(), dcmU.getDataset());
 					metadataWritten = true;
 				}
 				

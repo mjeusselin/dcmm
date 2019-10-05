@@ -8,9 +8,12 @@ import static org.junit.Assert.fail;
 import java.nio.file.Path;
 
 import org.dcm4che3.data.Attributes;
+import org.dcm4che3.data.Tag;
+import org.dcm4che3.data.VR;
 import org.junit.jupiter.api.Test;
 
 import fr.mjeu.dcmm.DcmPrepareTest;
+import fr.mjeu.dcmm.DcmUnit;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 
@@ -23,48 +26,48 @@ import fr.mjeu.dcmm.exception.DcmException;
 public class DcmUtilTest extends DcmPrepareTest {
 	
 	@Test
-	public void testReadDcmMetadata_OK() throws DcmException {
+	public void testReadDcm_OK() throws DcmException {
 		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
 		
-		Attributes testAttributes = null;
+		DcmUnit dcmU = null;
 		try {
-			testAttributes = DcmUtil.readDcmMetadata(DcmFileUtil.getPath(folderPathStr, FILENAME_EXAMPLE_15_MO));
+			dcmU = DcmUtil.readDcm(DcmFileUtil.getPath(folderPathStr, FILENAME_EXAMPLE_15_MO));
 		} catch (CheckerException c) {
 			fail();
 		}
 		
-		assertNotNull(testAttributes);
+		assertNotNull(dcmU);
 	}
 	
 	@Test
-	public void testReadDcmMetadata_path_null_KO() throws DcmException {
+	public void testReadDcm_path_null_KO() throws DcmException {
 		
-		Attributes testAttributes = null;
+		DcmUnit dcmU = null;
 		try {
-			testAttributes = DcmUtil.readDcmMetadata(null);
+			dcmU = DcmUtil.readDcm(null);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
 		}
 		
-		assertNull(testAttributes);
+		assertNull(dcmU);
 		
 	}
 	
 	@Test
-	public void testReadDcmMetadata_file_not_exists_KO() throws DcmException {
+	public void testReadDcm_file_not_exists_KO() throws DcmException {
 		
 		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK);
 		
-		Attributes testAttributes = null;
+		DcmUnit dcmU = null;
 		try {
-			testAttributes = DcmUtil.readDcmMetadata(DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO));
+			dcmU = DcmUtil.readDcm(DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO));
 			fail();
 		} catch (CheckerException c) {
 			// nothing
 		}
 		
-		assertNull(testAttributes);
+		assertNull(dcmU);
 	
 	}
 	
@@ -73,28 +76,29 @@ public class DcmUtilTest extends DcmPrepareTest {
 		
 		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_IMAGES);
 		
-		Attributes testAttributes = null;
+		DcmUnit dcmU = null;
 		try {
-			testAttributes = DcmUtil.readDcmMetadata(DcmFileUtil.getPath(folderPathStr, FILENAME_EXAMPLE_LOGO));
+			dcmU = DcmUtil.readDcm(DcmFileUtil.getPath(folderPathStr, FILENAME_EXAMPLE_LOGO));
 			fail();
 		} catch (CheckerException c) {
 			// nothing
 		}
 		
-		assertNull(testAttributes);
+		assertNull(dcmU);
 	
 	}
 	
 	@Test
-	public void writeDcmMetadata_OK() throws DcmException {
+	public void writeDcm_OK() throws DcmException {
 		
-		Attributes testAttributes = null;
+		DcmUnit dcmUnit = null;
 		boolean writtenMetadata = false;
 		
 		try {
 			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			testAttributes = DcmUtil.readDcmMetadata(testFilePath);
-			writtenMetadata = DcmUtil.writeDcmMetadata(testAttributes, testFilePath);
+			dcmUnit = DcmUtil.readDcm(testFilePath);
+			dcmUnit.getDataset().setString(Tag.PatientID, VR.LO, "Hera-MI");
+			writtenMetadata = DcmUtil.writeDcm(dcmUnit, testFilePath);
 		} catch (CheckerException c) {
 			fail();
 		}
