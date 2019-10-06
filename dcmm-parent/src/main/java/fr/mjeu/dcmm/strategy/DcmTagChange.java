@@ -31,10 +31,11 @@ public class DcmTagChange implements DcmStrategy {
 	
 	@Override
 	public DcmUnit execute(DcmUnit unitToModify) throws CheckerException {
-		logger.trace(TRACE_EX_BEGIN + unitToModify.toString());
-		
+
 		CheckerUtil.checkNotNull(unitToModify);
 		CheckerUtil.checkNotNull(unitToModify.getDataset());
+		
+		logger.trace(TRACE_EX_BEGIN + unitToModify.toString());
 		
 		StringBuilder debugSb = new StringBuilder();
 		debugSb.append(DEBUG_EXECUTE_1).append(dataElementTag)
