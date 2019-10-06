@@ -7,9 +7,9 @@ import java.nio.file.Path;
 import org.dcm4che3.io.DicomInputStream;
 import org.dcm4che3.io.DicomOutputStream;
 
-import fr.mjeu.dcmm.DcmUnit;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
+import fr.mjeu.dcmm.model.DcmUnit;
 
 /**
  * DICOM util class

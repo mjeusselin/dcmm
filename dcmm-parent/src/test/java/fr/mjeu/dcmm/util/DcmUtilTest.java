@@ -12,9 +12,9 @@ import org.dcm4che3.data.VR;
 import org.junit.jupiter.api.Test;
 
 import fr.mjeu.dcmm.DcmPrepareTest;
-import fr.mjeu.dcmm.DcmUnit;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
+import fr.mjeu.dcmm.model.DcmUnit;
 
 /**
  * Test class for DcmUtil

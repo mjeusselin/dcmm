@@ -1,4 +1,4 @@
-package fr.mjeu.dcmm;
+package fr.mjeu.dcmm.model;
 
 import java.nio.file.Path;
 

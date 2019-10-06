@@ -6,8 +6,8 @@ import org.dcm4che3.data.VR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.mjeu.dcmm.DcmUnit;
 import fr.mjeu.dcmm.exception.CheckerException;
+import fr.mjeu.dcmm.model.DcmUnit;
 import fr.mjeu.dcmm.util.CheckerUtil;
 
 public class DcmTagChange implements DcmStrategy {
