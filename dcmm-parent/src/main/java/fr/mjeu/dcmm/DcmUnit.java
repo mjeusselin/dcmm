@@ -1,5 +1,7 @@
 package fr.mjeu.dcmm;
 
+import java.nio.file.Path;
+
 import org.dcm4che3.data.Attributes;
 
 /**
@@ -11,6 +13,7 @@ import org.dcm4che3.data.Attributes;
 public class DcmUnit {
 	
 	private Attributes dataset;
+	private Path path;
 	private Attributes fmi;
 	
 	/**
@@ -38,5 +41,24 @@ public class DcmUnit {
 		this.fmi = fmi;
 	}
 	
-
+	/**
+	 * @return the path
+	 */
+	public Path getPath() {
+		return path;
+	}
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(Path path) {
+		this.path = path;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		if(this.path != null) {
+			sb.append(this.path);
+		}
+		return sb.toString();
+	}
 }

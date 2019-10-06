@@ -7,7 +7,6 @@ import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
 
-import org.dcm4che3.data.Attributes;
 import org.dcm4che3.data.Tag;
 import org.dcm4che3.data.VR;
 import org.junit.jupiter.api.Test;
@@ -37,6 +36,9 @@ public class DcmUtilTest extends DcmPrepareTest {
 		}
 		
 		assertNotNull(dcmU);
+		assertNotNull(dcmU.getDataset());
+		assertNotNull(dcmU.getFmi());
+		assertNotNull(dcmU.getPath());
 	}
 	
 	@Test
