@@ -7,6 +7,7 @@ package fr.mjeu.dcmm.exception;
  *
  */
 public enum DcmExceptionMessage {
+	ERROR_ADD_NULL_STRATEGY("Strategy is null."),
 	ERROR_ATTRIBUTES_NULL("Attributes are null."),
 	ERROR_DCM_UNIT_NOT_VALID("DcmUnit not valid."),
 	ERROR_FILENAME_EXTENSION_DCM("File format of this filename is not recognized : "),
@@ -18,6 +19,7 @@ public enum DcmExceptionMessage {
 	ERROR_GLOBAL("An error has happened."),
 	ERROR_INPUT_STREAM_CLOSE("Error closing input stream."),
 	ERROR_INVALID_PATH_EXCEPTION("Path str is not valid : "),
+	ERROR_MONITORING_NOT_IMPLEMENTED("Mode monitoring not yet implemented."),
 	ERROR_NULL("Object is null."),
 	ERROR_NULL_OR_EMPTY("String is null or empty."),
 	ERROR_OUTPUT_STREAM_CLOSE("Error closing output stream."),
