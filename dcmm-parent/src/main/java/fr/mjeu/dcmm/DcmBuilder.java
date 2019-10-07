@@ -29,17 +29,15 @@ public class DcmBuilder {
 
 	private String changePatientIDValue;
 	private DcmUnit dcmUnit;
-	private Path inFilePath;
 	private ArrayList<DcmStrategy> strategies = new ArrayList<>();
 	
 	public DcmBuilder(Path inFilePath, String changePatientIDValue) throws DcmException {
 		CheckerUtil.checkFileExistsFromPath(inFilePath);
 		CheckerUtil.checkNotEmpty(changePatientIDValue);
 		
-		this.inFilePath = inFilePath;
 		this.changePatientIDValue = changePatientIDValue;
 		
-		this.dcmUnit = DcmUtil.readDcm(this.inFilePath);
+		this.dcmUnit = DcmUtil.readDcm(inFilePath);
 	}
 	
 	/**
@@ -55,8 +53,8 @@ public class DcmBuilder {
 		}
 		
 		// write
-		logger.debug(DEBUG_WRITE_RESULT + this.inFilePath.toString());
-		DcmUtil.writeDcm(this.dcmUnit, this.inFilePath);
+		logger.debug(DEBUG_WRITE_RESULT + this.dcmUnit.getPath().toString());
+		DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getPath());
 		logger.trace(TRACE_BUILD_END);
 	}
 
@@ -77,17 +75,10 @@ public class DcmBuilder {
 	}
 
 	/**
-	 * @return the inFilePath
+	 * @return the dcmUnit
 	 */
-	public Path getInFilePath() {
-		return inFilePath;
-	}
-
-	/**
-	 * @param inFilePath the inFilePath to set
-	 */
-	public void setInFilePath(Path inFilePath) {
-		this.inFilePath = inFilePath;
+	public DcmUnit getDcmUnit() {
+		return dcmUnit;
 	}
 	
 	/**

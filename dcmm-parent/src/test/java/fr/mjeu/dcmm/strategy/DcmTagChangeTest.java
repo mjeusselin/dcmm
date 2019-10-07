@@ -25,13 +25,13 @@ import fr.mjeu.dcmm.util.DcmUtil;
  */
 public class DcmTagChangeTest extends DcmPrepareTest {
 
-	private static final String TEST_DATA_VALUE_TAG = "Hera-MI";
+	private static final String TEST_CHANGE_PATIENT_ID_VALUE_TAG = "Hera-MI";
 	
 	@SuppressWarnings("unused")
 	@Test
 	public void testConstructor_OK() throws DcmException {
 		try {
-			DcmTagChange dcmTagChange = new DcmTagChange(TEST_DATA_VALUE_TAG);
+			DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 		} catch (CheckerException c) {
 			fail();
 		}
@@ -63,7 +63,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 	public void testExecute_OK() throws DcmException {
 		
 		DcmUnit dcmUnit = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_DATA_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 		
 		try {
 			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
@@ -77,7 +77,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 		Attributes dataset = dcmUnit.getDataset();
 		assertNotNull(dataset);
 		assertEquals(
-				TEST_DATA_VALUE_TAG,
+				TEST_CHANGE_PATIENT_ID_VALUE_TAG,
 				dataset.getString(DcmTagChange.dataElementTag));
 		
 	}
@@ -86,7 +86,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 	public void testExecute_unit_null_KO() throws DcmException {
 		
 		DcmUnit dcmUnit = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_DATA_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 		
 		try {
 			dcmUnit = dcmTagChange.execute(dcmUnit);
@@ -103,7 +103,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 	public void testExecute_unit_dataset_null_KO() throws DcmException {
 		
 		DcmUnit dcmUnit = new DcmUnit();
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_DATA_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 		
 		try {
 			dcmUnit = dcmTagChange.execute(dcmUnit);

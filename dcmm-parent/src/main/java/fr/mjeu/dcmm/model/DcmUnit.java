@@ -13,8 +13,8 @@ import org.dcm4che3.data.Attributes;
 public class DcmUnit {
 	
 	private Attributes dataset;
-	private Path path;
 	private Attributes fmi;
+	private Path path;
 	
 	/**
 	 * @return the dataset
