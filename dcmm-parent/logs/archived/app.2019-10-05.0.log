@@ -1,4 +1,0 @@
-2019-10-05 23:00:48,012 DEBUG fr.mjeu.dcmm.strategy.DcmTagChange [main] change data element tag 1048608 with value null
-2019-10-05 23:01:22,379 DEBUG fr.mjeu.dcmm.strategy.DcmTagChange [main] change data element tag 1048608 with value null
-2019-10-05 23:03:10,444 DEBUG fr.mjeu.dcmm.strategy.DcmTagChange [main] change data element tag 1048608 with value Hera-MI
-2019-10-05 23:03:52,529 DEBUG fr.mjeu.dcmm.strategy.DcmTagChange [main] change data element tag 1048608 with value Hera-MI
