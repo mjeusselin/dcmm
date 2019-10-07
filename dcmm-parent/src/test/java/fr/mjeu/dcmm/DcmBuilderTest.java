@@ -9,7 +9,6 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.strategy.DcmTagChange;
 import fr.mjeu.dcmm.util.DcmFileUtil;
@@ -33,7 +32,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			dcmBuilder = new DcmBuilder(testFilePath, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			fail();
 		}
 		assertNotNull(dcmBuilder);
@@ -54,7 +53,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 		try {
 			dcmBuilder = new DcmBuilder(null, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 			fail();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			// nothing
 		}
 		assertNull(dcmBuilder);
@@ -69,7 +68,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 			dcmBuilder = new DcmBuilder(p, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 			fail();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			// nothing
 		}
 		assertNull(dcmBuilder);
@@ -82,7 +81,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			dcmBuilder = new DcmBuilder(testFilePath, null);
 			fail();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			// nothing
 		}
 		assertNull(dcmBuilder);
@@ -95,7 +94,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			dcmBuilder = new DcmBuilder(testFilePath, "");
 			fail();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			// nothing
 		}
 		assertNull(dcmBuilder);
@@ -110,7 +109,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			dcmBuilder = new DcmBuilder(testFilePath, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 			dcmBuilder.addStrategy(dcmTagChange);
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			fail();
 		}
 		assertNotNull(dcmBuilder);
@@ -146,7 +145,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			dcmBuilder = new DcmBuilder(testFilePath, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 			dcmBuilder.addStrategy(dcmTagChange);
 			dcmBuilder.build();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			fail();
 		}
 		assertNotNull(dcmBuilder);
@@ -161,7 +160,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			dcmBuilder = new DcmBuilder(testFilePath, TEST_CHANGE_PATIENT_ID_VALUE_TAG);
 			dcmBuilder.build();
-		} catch (CheckerException c) {
+		} catch (DcmException de) {
 			fail();
 		}
 		assertNotNull(dcmBuilder);
