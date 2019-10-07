@@ -18,6 +18,7 @@ import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 public class CheckerUtil {
 	
 	public static final String DCM_EXTENSION = ".dcm";
+	public static final String PNG_EXTENSION = ".png";
 
 	/**
 	 * Compare String object to empty string or null
@@ -114,6 +115,25 @@ public class CheckerUtil {
 		if(!filename.endsWith(DCM_EXTENSION)) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(DcmExceptionMessage.ERROR_FILENAME_EXTENSION_DCM.getMessage())
+				.append(filename);
+			throw new CheckerException(sb.toString());
+		}
+		
+	}
+	
+	/**
+	 * Check file name with PNG extension
+	 * @param filename the filename
+	 * @throws CheckerException
+	 */
+	public static void checkFilenamePngExtension(String filename) throws CheckerException {
+		
+		CheckerUtil.checkNotNull(filename);
+		CheckerUtil.checkNotEmpty(filename);
+		
+		if(!filename.endsWith(PNG_EXTENSION)) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(DcmExceptionMessage.ERROR_FILENAME_EXTENSION_PNG.getMessage())
 				.append(filename);
 			throw new CheckerException(sb.toString());
 		}

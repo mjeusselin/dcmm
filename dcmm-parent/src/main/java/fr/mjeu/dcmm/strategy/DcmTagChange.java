@@ -10,6 +10,12 @@ import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.model.DcmUnit;
 import fr.mjeu.dcmm.util.CheckerUtil;
 
+/**
+ * Change patient id in DICOM
+ * 
+ * @author Maxime
+ *
+ */
 public class DcmTagChange implements DcmStrategy {
 	
 	static Logger logger = LoggerFactory.getLogger(DcmTagChange.class);
