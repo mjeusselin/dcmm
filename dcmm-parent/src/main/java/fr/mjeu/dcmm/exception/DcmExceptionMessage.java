@@ -24,7 +24,8 @@ public enum DcmExceptionMessage {
 	ERROR_NULL("Object is null."),
 	ERROR_NULL_OR_EMPTY("String is null or empty."),
 	ERROR_OUTPUT_STREAM_CLOSE("Error closing output stream."),
-	ERROR_PATH_NULL("Path null");
+	ERROR_PATH_NULL("Path null"),
+	ERROR_WATERMARK("Error when watermarking DICOM : ");
 	
 	private String message;
 	
