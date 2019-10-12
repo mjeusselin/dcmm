@@ -1,6 +1,8 @@
 package fr.mjeu.dcmm;
 
+import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 import fr.mjeu.dcmm.strategy.DcmStrategy;
 import fr.mjeu.dcmm.strategy.DcmTagChange;
+import fr.mjeu.dcmm.strategy.DcmWatermark;
 import fr.mjeu.dcmm.util.CheckerUtil;
 import fr.mjeu.dcmm.util.DcmOutFilePathUtil;
 
@@ -23,6 +26,9 @@ public class DcmManager {
 	private static final String DEBUG_OUT_FOLDER_NULL = "out folder path string null, output folder to use will be the same as input folder one : ";
 	private static final String TRACE_EXECUTE_BEGIN = "begin execute";
 	private static final String TRACE_EXECUTE_END = "end execute";
+	
+	private static String S = File.separator;
+	protected static String RELATIVE_PATH_LOGO = "src"+S+"main"+S+"resources"+S+"images"+S+"herami-logo.png";
 	
 	private String changePatientIdValue;
 	private boolean changePatientIdOverwriteOriginalFile = false;
@@ -67,8 +73,16 @@ public class DcmManager {
 			logger.debug(DEBUG_MANUAL_MODE);
 			Path outFilePath = DcmOutFilePathUtil.getOutFilePath(this.inFilePath, this.outFilenameSuffix, this.outFolderPath);
 			DcmBuilder db = new DcmBuilder(this.inFilePath, outFilePath);
+			
+			// add strategy which changes patient id tag value
 			DcmStrategy tagChangeStrategy = new DcmTagChange(this.changePatientIdValue, this.changePatientIdOverwriteOriginalFile);
 			db.addStrategy(tagChangeStrategy);
+			
+			// add strategy which watermark png image vertically centered on the right border
+			Path imagePath = Paths.get(RELATIVE_PATH_LOGO);
+			DcmStrategy watermarkLogoStrategy = new DcmWatermark(imagePath);
+			db.addStrategy(watermarkLogoStrategy);
+			
 			logger.debug(DEBUG_BUILD + inFilePath.toString());
 			db.build();
 		}

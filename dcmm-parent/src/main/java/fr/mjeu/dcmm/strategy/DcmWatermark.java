@@ -39,9 +39,12 @@ import fr.mjeu.dcmm.util.CheckerUtil;
  */
 public class DcmWatermark implements DcmStrategy {
 
-	static Logger logger = LoggerFactory.getLogger(DcmStrategy.class);
+	static Logger logger = LoggerFactory.getLogger(DcmWatermark.class);
 	
+	private static String DEBUG_EXECUTE = "watermarking Hera-MI logo";
 	private static String DICOM_FORMAT_NAME = "DICOM";
+	private static String TRACE_EX_BEGIN = "begin execute with params : ";
+	private static String TRACE_EX_END = "end execute";
 	
 	private Path imagePath;
 	
@@ -54,6 +57,10 @@ public class DcmWatermark implements DcmStrategy {
 	@Override
 	public DcmUnit execute(DcmUnit unitToModify) throws DcmException {
 		CheckerUtil.checkNotNull(unitToModify);
+		
+		logger.trace(TRACE_EX_BEGIN + unitToModify.toString());
+		
+		logger.debug(DEBUG_EXECUTE);
 		try {
 			Iterator<ImageReader> readersIterator = ImageIO.getImageReadersByFormatName(DICOM_FORMAT_NAME);
 			ImageReader reader = (ImageReader) readersIterator.next();
@@ -103,6 +110,8 @@ public class DcmWatermark implements DcmStrategy {
 		} catch (Exception e) {
 			throw new DcmException(DcmExceptionMessage.ERROR_WATERMARK.getMessage() + unitToModify.toString(), e);
 		}
+		
+		logger.trace(TRACE_EX_END);
 		
 		return unitToModify;
 	}
