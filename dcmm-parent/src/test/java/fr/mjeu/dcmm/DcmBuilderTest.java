@@ -28,10 +28,12 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	@Test
 	public void testConstructor_OK() throws DcmException {
 		DcmBuilder dcmBuilder = null;
-		Path testFilePath = null;
+		Path testInFilePath = null;
+		Path testOutFilePath = null;
 		try {
-			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			dcmBuilder = new DcmBuilder(testFilePath);
+			testInFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testInFilePath, testOutFilePath);
 		} catch (DcmException de) {
 			fail();
 		}
@@ -39,8 +41,10 @@ public class DcmBuilderTest extends DcmPrepareTest {
 		assertNotNull(dcmBuilder.getDcmUnit());
 		assertNotNull(dcmBuilder.getDcmUnit().getDataset());
 		assertNotNull(dcmBuilder.getDcmUnit().getFmi());
-		assertNotNull(dcmBuilder.getDcmUnit().getPath());
-		assertEquals(testFilePath, dcmBuilder.getDcmUnit().getPath());
+		assertNotNull(dcmBuilder.getDcmUnit().getInFilePath());
+		assertEquals(testInFilePath, dcmBuilder.getDcmUnit().getInFilePath());
+		assertNotNull(dcmBuilder.getDcmUnit().getOutFilePath());
+		assertEquals(testOutFilePath, dcmBuilder.getDcmUnit().getOutFilePath());
 		assertNotNull(dcmBuilder.getStrategies());
 		assertEquals(INIT_STRATEGIES_NUMBER, dcmBuilder.getStrategies().size());
 		
@@ -49,8 +53,11 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	@Test
 	public void testConstructor_in_file_path_null_KO() throws DcmException {
 		DcmBuilder dcmBuilder = null;
+		Path testInFilePath = null;
+		Path testOutFilePath = null;
 		try {
-			dcmBuilder = new DcmBuilder(null);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testInFilePath, testOutFilePath);
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -62,10 +69,12 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	public void testConstructor_in_file_not_exists_KO() throws DcmException {
 		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
 		DcmBuilder dcmBuilder = null;
-		Path p = null;
+		Path testInFilePath = null;
+		Path testOutFilePath = null;
 		try {
-			p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
-			dcmBuilder = new DcmBuilder(p);
+			testInFilePath = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testInFilePath, testOutFilePath);
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -74,13 +83,47 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	}
 	
 	@Test
+	public void testConstructor_out_file_path_null_KO() throws DcmException {
+		DcmBuilder dcmBuilder = null;
+		Path testInFilePath = null;
+		Path testOutFilePath = null;
+		try {
+			testInFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testInFilePath, testOutFilePath);
+			fail();
+		} catch (DcmException de) {
+			// nothing
+		}
+		assertNull(dcmBuilder);
+	}
+	
+	@Test
+	public void testConstructor_out_file_parent_not_exists_KO() throws DcmException {
+		DcmBuilder dcmBuilder = null;
+		Path testInFilePath = null;
+		Path testOutFilePath = null;
+		try {
+			testInFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr + "ko", FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testInFilePath, testOutFilePath);
+			fail();
+		} catch (DcmException de) {
+			// nothing
+		}
+		assertNull(dcmBuilder);
+		
+	}
+	
+	@Test
 	public void testAddStrategy_OK() throws DcmException {
 		DcmBuilder dcmBuilder = null;
 		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		Path testFilePath = null;
+		Path testOutFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			dcmBuilder = new DcmBuilder(testFilePath);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testFilePath, testOutFilePath);
 			dcmBuilder.addStrategy(dcmTagChange);
 		} catch (DcmException de) {
 			fail();
@@ -95,9 +138,11 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	public void testAddStrategy_null_KO() throws DcmException {
 		DcmBuilder dcmBuilder = null;
 		Path testFilePath = null;
+		Path testOutFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			dcmBuilder = new DcmBuilder(testFilePath);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testFilePath, testOutFilePath);
 			dcmBuilder.addStrategy(null);
 			fail();
 		} catch (DcmException de) {
@@ -113,9 +158,11 @@ public class DcmBuilderTest extends DcmPrepareTest {
 		DcmBuilder dcmBuilder = null;
 		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		Path testFilePath = null;
+		Path testOutFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			dcmBuilder = new DcmBuilder(testFilePath);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testFilePath, testOutFilePath);
 			dcmBuilder.addStrategy(dcmTagChange);
 			dcmBuilder.build();
 		} catch (DcmException de) {
@@ -129,9 +176,11 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	public void testBuild_no_strategy_OK() throws DcmException {
 		DcmBuilder dcmBuilder = null;
 		Path testFilePath = null;
+		Path testOutFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-			dcmBuilder = new DcmBuilder(testFilePath);
+			testOutFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_15_MO);
+			dcmBuilder = new DcmBuilder(testFilePath, testOutFilePath);
 			dcmBuilder.build();
 		} catch (DcmException de) {
 			fail();

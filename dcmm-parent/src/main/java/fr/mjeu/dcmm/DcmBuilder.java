@@ -30,10 +30,15 @@ public class DcmBuilder {
 	private DcmUnit dcmUnit;
 	private ArrayList<DcmStrategy> strategies = new ArrayList<>();
 	
-	public DcmBuilder(Path inFilePath) throws DcmException {
+	public DcmBuilder(Path inFilePath, Path outFilePath) throws DcmException {
 		CheckerUtil.checkFileExistsFromPath(inFilePath);
+		CheckerUtil.checkNotNull(outFilePath);
+		CheckerUtil.checkFolderExists(outFilePath.getParent().toString());
 		
 		this.dcmUnit = DcmUtil.readDcm(inFilePath);
+		this.dcmUnit.setInFilePath(inFilePath);
+		this.dcmUnit.setOutFilePath(outFilePath);
+		
 	}
 	
 	/**
@@ -49,8 +54,8 @@ public class DcmBuilder {
 		}
 		
 		// write
-		logger.debug(DEBUG_WRITE_RESULT + this.dcmUnit.getPath().toString());
-		DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getPath());
+		logger.debug(DEBUG_WRITE_RESULT + this.dcmUnit.getOutFilePath().toString());
+		DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getOutFilePath());
 		logger.trace(TRACE_BUILD_END);
 	}
 

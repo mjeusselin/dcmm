@@ -61,7 +61,7 @@ public class DcmWatermark implements DcmStrategy {
 			Iterator<ImageReader> readersIterator = ImageIO.getImageReadersByFormatName(DICOM_FORMAT_NAME);
 			ImageReader reader = (ImageReader) readersIterator.next();
 			DicomImageReadParam defaultReadParam = (DicomImageReadParam) reader.getDefaultReadParam();
-			ImageInputStream iis = ImageIO.createImageInputStream(unitToModify.getPath().toFile());
+			ImageInputStream iis = ImageIO.createImageInputStream(unitToModify.getInFilePath().toFile());
 			reader.setInput(iis, false);
 			Raster raster = reader.readRaster(0, defaultReadParam);
 			iis.close();

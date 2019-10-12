@@ -11,6 +11,7 @@ import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 import fr.mjeu.dcmm.strategy.DcmStrategy;
 import fr.mjeu.dcmm.strategy.DcmTagChange;
 import fr.mjeu.dcmm.util.CheckerUtil;
+import fr.mjeu.dcmm.util.DcmOutFilePathUtil;
 
 public class DcmManager {
 	
@@ -64,7 +65,8 @@ public class DcmManager {
 		if(this.inFilePath != null) {
 			// manual mode
 			logger.debug(DEBUG_MANUAL_MODE);
-			DcmBuilder db = new DcmBuilder(this.inFilePath);
+			Path outFilePath = DcmOutFilePathUtil.getOutFilePath(this.inFilePath, this.outFilenameSuffix, this.outFolderPath);
+			DcmBuilder db = new DcmBuilder(this.inFilePath, outFilePath);
 			DcmStrategy tagChangeStrategy = new DcmTagChange(this.changePatientIdValue, this.changePatientIdOverwriteOriginalFile);
 			db.addStrategy(tagChangeStrategy);
 			logger.debug(DEBUG_BUILD + inFilePath.toString());

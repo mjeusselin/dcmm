@@ -14,7 +14,8 @@ public class DcmUnit {
 	
 	private Attributes dataset;
 	private Attributes fmi;
-	private Path path;
+	private Path inFilePath; // initial DICOM
+	private Path outFilePath; // output DICOM
 	
 	/**
 	 * @return the dataset
@@ -42,22 +43,33 @@ public class DcmUnit {
 	}
 	
 	/**
-	 * @return the path
+	 * @return the inFilePath
 	 */
-	public Path getPath() {
-		return path;
+	public Path getInFilePath() {
+		return inFilePath;
 	}
 	/**
-	 * @param path the path to set
+	 * @param inFilePath the inFilePath to set
 	 */
-	public void setPath(Path path) {
-		this.path = path;
+	public void setInFilePath(Path inFilePath) {
+		this.inFilePath = inFilePath;
 	}
-	
+	/**
+	 * @return the outFilePath
+	 */
+	public Path getOutFilePath() {
+		return outFilePath;
+	}
+	/**
+	 * @param outFilePath the outFilePath to set
+	 */
+	public void setOutFilePath(Path outFilePath) {
+		this.outFilePath = outFilePath;
+	}
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if(this.path != null) {
-			sb.append(this.path);
+		if(this.inFilePath != null) {
+			sb.append(this.inFilePath);
 		}
 		return sb.toString();
 	}
