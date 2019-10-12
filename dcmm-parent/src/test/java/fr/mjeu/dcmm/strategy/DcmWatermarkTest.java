@@ -30,77 +30,25 @@ public class DcmWatermarkTest extends DcmPrepareTest {
 	@Test
 	public void testConstructor_OK() throws DcmException {
 		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
 		Path imagePath = null;
 		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 		} catch (DcmException c) {
 			fail();
 		}
 		assertNotNull(dcmWatermark);
-		assertEquals(dicomPath, dcmWatermark.getDicomPath());
 		assertEquals(imagePath, dcmWatermark.getImagePath());
 		assertFalse(dcmWatermark.getOverwriteOriginalFile());
 	}
 	
 	@Test
-	public void testConstructor_dcm_not_exists_KO() throws DcmException {
-		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
-		Path imagePath = null;
-		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
-			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
-			fail();
-		} catch (DcmException c) {
-			// nothing
-		}
-		assertNull(dcmWatermark);
-	}
-	
-	@Test
-	public void testConstructor_dcm_null_KO() throws DcmException {
-		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
-		Path imagePath = null;
-		try {
-			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
-			fail();
-		} catch (DcmException c) {
-			// nothing
-		}
-		assertNull(dcmWatermark);
-	}
-	
-	@Test
-	public void testConstructor_dcm_extension_KO() throws DcmException {
-		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
-		Path imagePath = null;
-		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
-			fail();
-		} catch (DcmException c) {
-			// nothing
-		}
-		assertNull(dcmWatermark);
-	}
-	
-	@Test
 	public void testConstructor_image_not_exists_KO() throws DcmException {
 		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
 		Path imagePath = null;
 		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXTENSION_DCM_KO);
 			imagePath = DcmFileUtil.getPath(workFolderPathStr, "KO"+FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 			fail();
 		} catch (DcmException c) {
 			// nothing
@@ -111,11 +59,9 @@ public class DcmWatermarkTest extends DcmPrepareTest {
 	@Test
 	public void testConstructor_image_null_KO() throws DcmException {
 		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
 		Path imagePath = null;
 		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXTENSION_DCM_KO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 			fail();
 		} catch (DcmException c) {
 			// nothing
@@ -126,12 +72,10 @@ public class DcmWatermarkTest extends DcmPrepareTest {
 	@Test
 	public void testConstructor_image_extension_KO() throws DcmException {
 		DcmWatermark dcmWatermark = null;
-		Path dicomPath = null;
 		Path imagePath = null;
 		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXTENSION_DCM_KO);
 			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXTENSION_DCM_KO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 			fail();
 		} catch (DcmException c) {
 			// nothing
@@ -151,7 +95,7 @@ public class DcmWatermarkTest extends DcmPrepareTest {
 			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 			outFilePathExpected = DcmFileUtil.getPath(getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL + FILENAME_EXAMPLE_15_MO_WITH_LOGO));
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 			dcmUnit = DcmUtil.readDcm(dicomPath);
 			dcmUnit = dcmWatermark.execute(dcmUnit);
 			dcmUnitExpected = DcmUtil.readDcm(outFilePathExpected);
@@ -169,12 +113,10 @@ public class DcmWatermarkTest extends DcmPrepareTest {
 	public void testExecute_dcm_unit_null_KO() throws DcmException {
 		DcmWatermark dcmWatermark = null;
 		DcmUnit dcmUnit = null;
-		Path dicomPath = null;
 		Path imagePath = null;
 		try {
-			dicomPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 			imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
-			dcmWatermark = new DcmWatermark(dicomPath, imagePath);
+			dcmWatermark = new DcmWatermark(imagePath);
 			dcmUnit = dcmWatermark.execute(dcmUnit);
 			fail();
 		} catch (DcmException d) {

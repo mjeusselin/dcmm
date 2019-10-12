@@ -43,15 +43,11 @@ public class DcmWatermark implements DcmStrategy {
 	
 	private static String DICOM_FORMAT_NAME = "DICOM";
 	
-	private Path dicomPath;
 	private Path imagePath;
 	
-	public DcmWatermark(Path dicomPath, Path imagePath) throws CheckerException {
-		CheckerUtil.checkFileExistsFromPath(dicomPath);
-		CheckerUtil.checkFilenameDcmExtension(dicomPath.getFileName().toString());
+	public DcmWatermark(Path imagePath) throws CheckerException {
 		CheckerUtil.checkFileExistsFromPath(imagePath);
 		CheckerUtil.checkFilenamePngExtension(imagePath.getFileName().toString());
-		this.dicomPath = dicomPath;
 		this.imagePath = imagePath;
 	}
 	
@@ -105,17 +101,10 @@ public class DcmWatermark implements DcmStrategy {
 			//unitToModify.getDataset().writeTo(dos2);
 			//dos2.close();
 		} catch (Exception e) {
-			throw new DcmException(DcmExceptionMessage.ERROR_WATERMARK.getMessage() + this.dicomPath.toString(), e);
+			throw new DcmException(DcmExceptionMessage.ERROR_WATERMARK.getMessage() + unitToModify.toString(), e);
 		}
 		
 		return unitToModify;
-	}
-
-	/**
-	 * @return the dicomPath
-	 */
-	public Path getDicomPath() {
-		return dicomPath;
 	}
 
 	/**
