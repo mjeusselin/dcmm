@@ -57,6 +57,7 @@ public class DcmWatermark implements DcmStrategy {
 	
 	@Override
 	public DcmUnit execute(DcmUnit unitToModify) throws DcmException {
+		CheckerUtil.checkNotNull(unitToModify);
 		try {
 			Iterator<ImageReader> readersIterator = ImageIO.getImageReadersByFormatName(DICOM_FORMAT_NAME);
 			ImageReader reader = (ImageReader) readersIterator.next();
@@ -108,6 +109,20 @@ public class DcmWatermark implements DcmStrategy {
 		}
 		
 		return unitToModify;
+	}
+
+	/**
+	 * @return the dicomPath
+	 */
+	public Path getDicomPath() {
+		return dicomPath;
+	}
+
+	/**
+	 * @return the imagePath
+	 */
+	public Path getImagePath() {
+		return imagePath;
 	}
 
 	@Override

@@ -109,8 +109,13 @@ public class DcmPrepareTest extends DcmTest {
 	private static void copyTestFilesToWorkFolder() throws DcmException, IOException {
 		String file15PathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK + FILENAME_EXAMPLE_15_MO);
 		Path file15Path = DcmFileUtil.getPath(file15PathStr);
-		Path copyPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
-		Files.copy(file15Path, copyPath);
+		Path file15CopyPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
+		Files.copy(file15Path, file15CopyPath);
+		
+		String fileLogoPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_IMAGES + FILENAME_EXAMPLE_LOGO);
+		Path fileLogoPath = DcmFileUtil.getPath(fileLogoPathStr);
+		Path fileLogoCopyPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
+		Files.copy(fileLogoPath, fileLogoCopyPath);
 	}
 
 }

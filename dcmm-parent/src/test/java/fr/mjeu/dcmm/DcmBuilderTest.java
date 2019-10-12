@@ -67,7 +67,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	
 	@Test
 	public void testConstructor_in_file_not_exists_KO() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		DcmBuilder dcmBuilder = null;
 		Path testInFilePath = null;
 		Path testOutFilePath = null;

@@ -24,7 +24,7 @@ public class DcmFileUtilTest extends DcmTest {
 
 	@Test
 	public void testGetFileFromPath_OK() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_EXISTS_OK);
 		File f = null;
 		f = DcmFileUtil.getFileFromPath(p);
@@ -35,7 +35,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetFileFromPath_file_not_exists_KO() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 		File f = null;
 		f = DcmFileUtil.getFileFromPath(p);
@@ -53,7 +53,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetFileFromPathStr_OK() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_EXISTS_OK);
 		File f = null;
 		f = DcmFileUtil.getFileFromPathStr(p.toString());
@@ -64,7 +64,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetFileFromPathStr_file_not_exists_KO() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
 		File f = null;
 		f = DcmFileUtil.getFileFromPathStr(p.toString());
@@ -87,7 +87,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetPath_file_OK() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = null;
 		try {
 			p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_EXISTS_OK);
@@ -99,7 +99,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetPath_file_not_exists_OK() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = null;
 		try {
 			p = DcmFileUtil.getPath(folderPathStr, FILENAME_FILE_DOES_NOT_EXIST_KO);
@@ -111,7 +111,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetPath_file_filename_null_KO() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = null;
 		try {
 			p = DcmFileUtil.getPath(folderPathStr, null);
@@ -124,7 +124,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetPath_file_filename_empty_KO() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = null;
 		try {
 			p = DcmFileUtil.getPath(folderPathStr, "");
@@ -174,7 +174,7 @@ public class DcmFileUtilTest extends DcmTest {
 	
 	@Test
 	public void testGetPath_folder_OK() throws DcmException {
-		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXISTS_OK);
+		String folderPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL);
 		Path p = null;
 		try {
 			p = DcmFileUtil.getPath(folderPathStr);

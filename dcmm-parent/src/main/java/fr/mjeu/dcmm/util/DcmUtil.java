@@ -41,6 +41,7 @@ public class DcmUtil {
 					
 					dcmUnit.setDataset(dis.readDataset(-1, -1));
 					dcmUnit.setFmi(dis.getFileMetaInformation());
+					dcmUnit.setInFilePath(p);
 				}
 				
 			} catch (IOException ie) {

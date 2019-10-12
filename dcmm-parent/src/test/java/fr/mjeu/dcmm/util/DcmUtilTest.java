@@ -38,6 +38,7 @@ public class DcmUtilTest extends DcmPrepareTest {
 		assertNotNull(dcmU);
 		assertNotNull(dcmU.getDataset());
 		assertNotNull(dcmU.getFmi());
+		assertNotNull(dcmU.getInFilePath());
 	}
 	
 	@Test

@@ -36,7 +36,6 @@ public class DcmBuilder {
 		CheckerUtil.checkFolderExists(outFilePath.getParent().toString());
 		
 		this.dcmUnit = DcmUtil.readDcm(inFilePath);
-		this.dcmUnit.setInFilePath(inFilePath);
 		this.dcmUnit.setOutFilePath(outFilePath);
 		
 	}
