@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 
 import org.junit.jupiter.api.AfterAll;
@@ -66,8 +67,8 @@ public class DcmPrepareTest extends DcmTest {
 	 * @throws DcmException 
 	 */
 	private static void initializeOutFolderPath() throws DcmException {
-		outFolderPathStr = getAbsolutePathStringFromTestClassLoader(RELATIVE_TARGET_FOLDER_PATH, OUT_FOLDER_NAME);
-		outFolderPath = DcmFileUtil.getPath(outFolderPathStr);
+		outFolderPath = Paths.get(PATH_TARGET, OUT_FOLDER_NAME);
+		outFolderPathStr = outFolderPath.toString();
 	}
 	
 	/**
@@ -75,8 +76,8 @@ public class DcmPrepareTest extends DcmTest {
 	 * @throws DcmException 
 	 */
 	private static void initializeWorkFolderPath() throws DcmException {
-		workFolderPathStr = getAbsolutePathStringFromTestClassLoader(RELATIVE_TARGET_FOLDER_PATH, WORK_FOLDER_NAME);
-		workFolderPath = DcmFileUtil.getPath(workFolderPathStr);
+		workFolderPath = Paths.get(PATH_TARGET, WORK_FOLDER_NAME);
+		workFolderPathStr = workFolderPath.toString();
 	}
 	
 	/**
