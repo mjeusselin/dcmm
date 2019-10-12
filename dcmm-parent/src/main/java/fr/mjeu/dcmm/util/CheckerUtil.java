@@ -21,6 +21,17 @@ public class CheckerUtil {
 	public static final String PNG_EXTENSION = ".png";
 
 	/**
+	 * Compare String object to empty string or null and return true if string is "true"
+	 * @param s the string
+	 * @return true if string is "true", false otherwise
+	 */
+	public static boolean checkBoolean(String s) {
+		
+		return Boolean.valueOf(s);
+		
+	}
+	
+	/**
 	 * Compare String object to empty string or null
 	 * @param s the string
 	 * @throws CheckerException

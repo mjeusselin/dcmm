@@ -15,22 +15,35 @@ import fr.mjeu.dcmm.util.DcmFileUtil;
 public class DcmPrepareTest extends DcmTest {
 	
 	protected static String RELATIVE_TARGET_FOLDER_PATH = ".."+S+".."+S+".."+S+".."+S+".."+S;
+	protected static String OUT_FILENAME_SUFFIX = "2";
+	protected static String OUT_FOLDER_NAME = "outFolder";
 	protected static String WORK_FOLDER_NAME = "workFolder";
 	
+	protected static Path outFolderPath = null;
+	protected static String outFolderPathStr = null;
 	protected static Path workFolderPath = null;
 	protected static String workFolderPathStr = null;
 	
 	@BeforeEach
 	protected void initializeTest() throws DcmException, IOException {
 		
-		// initializes work folder path
+		// initialize work folder path
 		initializeWorkFolderPath();
 		
-		// deletes work folder and its content if already exists
-		deleteWorkFolder();
+		// initialize out folder path
+		initializeOutFolderPath();
+		
+		// delete work folder and its content if already exists
+		deleteFolder(workFolderPath);
+		
+		// delete output folder and its content if already exists
+		deleteFolder(outFolderPath);
 		
 		// create work folder
-		createWorkFolder();
+		createFolder(workFolderPath);
+		
+		// create output folder
+		createFolder(outFolderPath);
 		
 		// copy test files to work folder
 		copyTestFilesToWorkFolder();
@@ -41,8 +54,20 @@ public class DcmPrepareTest extends DcmTest {
 	protected static void cleanTests() throws IOException {
 		
 		// deletes work folder and its content
-		deleteWorkFolder();
+		deleteFolder(workFolderPath);
+		
+		// deletes output folder and its content
+		deleteFolder(outFolderPath);
 				
+	}
+	
+	/**
+	 * Initialize out folder path
+	 * @throws DcmException 
+	 */
+	private static void initializeOutFolderPath() throws DcmException {
+		outFolderPathStr = getAbsolutePathStringFromTestClassLoader(RELATIVE_TARGET_FOLDER_PATH, OUT_FOLDER_NAME);
+		outFolderPath = DcmFileUtil.getPath(outFolderPathStr);
 	}
 	
 	/**
@@ -55,12 +80,13 @@ public class DcmPrepareTest extends DcmTest {
 	}
 	
 	/**
-	 * Delete work folder and its content
+	 * Delete folder and its content
+	 * @param folderPath folder path object
 	 * @throws IOException 
 	 */
-	private static void deleteWorkFolder() throws IOException {
-		if(Files.exists(workFolderPath) && Files.isDirectory(workFolderPath)) {
-			Files.walk(workFolderPath)
+	private static void deleteFolder(Path folderPath) throws IOException {
+		if(Files.exists(folderPath) && Files.isDirectory(folderPath)) {
+			Files.walk(folderPath)
 		      .sorted(Comparator.reverseOrder())
 		      .map(Path::toFile)
 		      .forEach(File::delete);
@@ -68,11 +94,11 @@ public class DcmPrepareTest extends DcmTest {
 	}
 	
 	/**
-	 * Create work folder
+	 * Create folder
 	 * @throws IOException 
 	 */
-	private static void createWorkFolder() throws IOException {
-		Files.createDirectories(workFolderPath);
+	private static void createFolder(Path folderPath) throws IOException {
+		Files.createDirectories(folderPath);
 	}
 	
 	/**

@@ -67,9 +67,12 @@ public class DcmApplication {
             try {
             	logger.debug(DEBUG_DCMM_INSTANCIATION);
 	            DcmManager dcmm = new DcmManager(
-	            		inFolderAbsolutePathStr,
+	            		changePatientIdValue,
+	            		changePatientIdOverwriteOriginalFile,
 	            		inFilename,
-	            		changePatientIdValue);
+	            		inFolderAbsolutePathStr,
+	            		outFilenameSuffix,
+	            		outFolderAbsolutePathStr);
 	            logger.debug(DEBUG_DCMM_EXECUTION);
 	            dcmm.execute();
 	            status = STATUS_SUCCESS;

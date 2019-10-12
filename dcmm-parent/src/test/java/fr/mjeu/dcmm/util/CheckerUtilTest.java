@@ -1,5 +1,7 @@
 package fr.mjeu.dcmm.util;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
@@ -11,6 +13,36 @@ import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 
 public class CheckerUtilTest extends DcmTest {
+	
+	@Test
+	public void testCheckBoolean_true_OK() {
+		String booleanTestStr = "true";
+		assertTrue(CheckerUtil.checkBoolean(booleanTestStr));
+	}
+	
+	@Test
+	public void testCheckBoolean_false_OK() {
+		String booleanTestStr = "false";
+		assertFalse(CheckerUtil.checkBoolean(booleanTestStr));
+	}
+	
+	@Test
+	public void testCheckBoolean_null_KO() {
+		String booleanTestStr = null;
+		assertFalse(CheckerUtil.checkBoolean(booleanTestStr));
+	}
+	
+	@Test
+	public void testCheckBoolean_empty_KO() {
+		String booleanTestStr = "";
+		assertFalse(CheckerUtil.checkBoolean(booleanTestStr));
+	}
+	
+	@Test
+	public void testCheckBoolean_other_string_KO() {
+		String booleanTestStr = "test";
+		assertFalse(CheckerUtil.checkBoolean(booleanTestStr));
+	}
 	
 	@Test
 	public void testCheckNotEmpty_OK() {
