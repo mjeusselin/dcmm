@@ -76,7 +76,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	@Test
 	public void testAddStrategy_OK() throws DcmException {
 		DcmBuilder dcmBuilder = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		Path testFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
@@ -111,7 +111,7 @@ public class DcmBuilderTest extends DcmPrepareTest {
 	@Test
 	public void testBuild_OK() throws DcmException {
 		DcmBuilder dcmBuilder = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		Path testFilePath = null;
 		try {
 			testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);

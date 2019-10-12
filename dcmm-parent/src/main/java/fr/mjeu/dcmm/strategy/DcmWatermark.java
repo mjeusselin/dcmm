@@ -10,7 +10,6 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferUShort;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
-import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
@@ -23,7 +22,6 @@ import javax.imageio.stream.ImageInputStream;
 import org.dcm4che3.data.Tag;
 import org.dcm4che3.data.VR;
 import org.dcm4che3.imageio.plugins.dcm.DicomImageReadParam;
-import org.dcm4che3.io.DicomOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,6 +108,11 @@ public class DcmWatermark implements DcmStrategy {
 		}
 		
 		return unitToModify;
+	}
+
+	@Override
+	public boolean getOverwriteOriginalFile() {
+		return overwriteOriginalFile;
 	}
 
 }

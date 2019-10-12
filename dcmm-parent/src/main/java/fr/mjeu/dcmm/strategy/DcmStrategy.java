@@ -12,11 +12,13 @@ import fr.mjeu.dcmm.model.DcmUnit;
 public interface DcmStrategy {
 
 	/*
-	 * This boolean precises if original DICOM file must be overriden
+	 * This boolean precises if original DICOM file must be overwritten
 	 * by this strategy's execution
 	 */
-	public boolean overrideOriginalFile = true;
+	boolean overwriteOriginalFile = false;
 	
 	public DcmUnit execute(DcmUnit unitToModify) throws DcmException;
+	
+	public boolean getOverwriteOriginalFile();
 	
 }

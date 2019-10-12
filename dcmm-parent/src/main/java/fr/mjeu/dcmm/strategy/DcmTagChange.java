@@ -29,10 +29,12 @@ public class DcmTagChange implements DcmStrategy {
 	private static VR vr = VR.LO;
 	
 	private String dataValueField;
+	private boolean overwriteOriginalFile;
 	
-	public DcmTagChange(String dataValueField) throws CheckerException {
+	public DcmTagChange(String dataValueField, boolean overwriteOriginalFile) throws CheckerException {
 		CheckerUtil.checkNotEmpty(dataValueField);
 		this.dataValueField = dataValueField;
+		this.overwriteOriginalFile = overwriteOriginalFile;
 	}
 	
 	@Override
@@ -56,6 +58,18 @@ public class DcmTagChange implements DcmStrategy {
 		logger.trace(TRACE_EX_END);
 		
 		return unitToModify;
+	}
+	
+	/**
+	 * @return the dataValueField
+	 */
+	public String getDataValueField() {
+		return dataValueField;
+	}
+
+	@Override
+	public boolean getOverwriteOriginalFile() {
+		return this.overwriteOriginalFile;
 	}
 
 }

@@ -25,6 +25,8 @@ public class DcmTest {
 	protected static String PATH_STR_FOLDER_EXISTS_OK = "util";
 	protected static String PATH_STR_FOLDER_DOES_NOT_EXIST_KO = "utilDoesNotExist";
 	protected static String RELATIVE_TEST_RESOURCES_PATH = ".."+S+".."+S+".."+S+".."+S+".."+S+".."+S+"src"+S+"test"+S+"resources"+S;
+	protected static final boolean TEST_OVERWRITE_TRUE = true;
+	protected static final boolean TEST_OVERWRITE_FALSE = false;
 	
 	/**
 	 * Get absolute path string for test resources

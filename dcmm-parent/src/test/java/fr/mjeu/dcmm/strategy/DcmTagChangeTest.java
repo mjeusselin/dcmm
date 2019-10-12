@@ -1,8 +1,10 @@
 package fr.mjeu.dcmm.strategy;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
@@ -27,43 +29,61 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 
 	private static final String TEST_CHANGE_PATIENT_ID_VALUE_TAG = "Hera-MI";
 	
-	@SuppressWarnings("unused")
 	@Test
-	public void testConstructor_OK() throws DcmException {
+	public void testConstructor_overwrite_true_OK() throws DcmException {
+		DcmTagChange dcmTagChange = null;
 		try {
-			DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+			dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		} catch (CheckerException c) {
 			fail();
 		}
+		assertNotNull(dcmTagChange);
+		assertEquals(TEST_CHANGE_PATIENT_ID_VALUE_TAG, dcmTagChange.getDataValueField());
+		assertTrue(dcmTagChange.getOverwriteOriginalFile());
 	}
 	
-	@SuppressWarnings("unused")
+	@Test
+	public void testConstructor_overwrite_false_OK() throws DcmException {
+		DcmTagChange dcmTagChange = null;
+		try {
+			dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_FALSE);
+		} catch (CheckerException c) {
+			fail();
+		}
+		assertNotNull(dcmTagChange);
+		assertEquals(TEST_CHANGE_PATIENT_ID_VALUE_TAG, dcmTagChange.getDataValueField());
+		assertFalse(dcmTagChange.getOverwriteOriginalFile());
+	}
+	
 	@Test
 	public void testConstructor_null_KO() throws DcmException {
+		DcmTagChange dcmTagChange = null;
 		try {
-			DcmTagChange dcmTagChange = new DcmTagChange(null);
+			dcmTagChange = new DcmTagChange(null, TEST_OVERWRITE_TRUE);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
 		}
+		assertNull(dcmTagChange);
 	}
 	
-	@SuppressWarnings("unused")
 	@Test
 	public void testConstructor_empty_KO() throws DcmException {
+		DcmTagChange dcmTagChange = null;
 		try {
-			DcmTagChange dcmTagChange = new DcmTagChange("");
+			dcmTagChange = new DcmTagChange("", TEST_OVERWRITE_TRUE);
 			fail();
 		} catch (CheckerException c) {
 			// nothing
 		}
+		assertNull(dcmTagChange);
 	}
 	
 	@Test
 	public void testExecute_OK() throws DcmException {
 		
 		DcmUnit dcmUnit = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		
 		try {
 			Path testFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
@@ -86,7 +106,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 	public void testExecute_unit_null_KO() throws DcmException {
 		
 		DcmUnit dcmUnit = null;
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		
 		try {
 			dcmUnit = dcmTagChange.execute(dcmUnit);
@@ -103,7 +123,7 @@ public class DcmTagChangeTest extends DcmPrepareTest {
 	public void testExecute_unit_dataset_null_KO() throws DcmException {
 		
 		DcmUnit dcmUnit = new DcmUnit();
-		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG);
+		DcmTagChange dcmTagChange = new DcmTagChange(TEST_CHANGE_PATIENT_ID_VALUE_TAG, TEST_OVERWRITE_TRUE);
 		
 		try {
 			dcmUnit = dcmTagChange.execute(dcmUnit);
