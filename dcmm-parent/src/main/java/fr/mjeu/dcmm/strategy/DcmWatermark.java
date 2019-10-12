@@ -98,15 +98,11 @@ public class DcmWatermark implements DcmStrategy {
 			int y = biHeight/2 - bi2Height/2;
 			g.drawImage(bi2, x, y, null);
 			g.dispose();
-			// File f2 = new File(file.getAbsoluteFile().getPath().toString().concat("2.dcm"));
 			DataBufferUShort dataBuffer = (DataBufferUShort) bi.getData().getDataBuffer();
-			//DicomOutputStream dos2 = new DicomOutputStream(f2);
 			short[] shorts = dataBuffer.getData(0);
 			byte[] bytes2 = new byte[shorts.length * 2];
 			ByteBuffer.wrap(bytes2).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(shorts);
 			unitToModify.getDataset().setValue(Tag.PixelData, VR.OW, bytes2);
-			//unitToModify.getDataset().writeTo(dos2);
-			//dos2.close();
 		} catch (Exception e) {
 			throw new DcmException(DcmExceptionMessage.ERROR_WATERMARK.getMessage() + unitToModify.toString(), e);
 		}
