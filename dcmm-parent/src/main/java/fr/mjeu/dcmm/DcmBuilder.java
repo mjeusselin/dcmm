@@ -27,15 +27,11 @@ public class DcmBuilder {
 	private static final String TRACE_BUILD_BEGIN = "begin build";
 	private static final String TRACE_BUILD_END = "end build";
 
-	private String changePatientIdValue;
 	private DcmUnit dcmUnit;
 	private ArrayList<DcmStrategy> strategies = new ArrayList<>();
 	
-	public DcmBuilder(Path inFilePath, String changePatientIdValue) throws DcmException {
+	public DcmBuilder(Path inFilePath) throws DcmException {
 		CheckerUtil.checkFileExistsFromPath(inFilePath);
-		CheckerUtil.checkNotEmpty(changePatientIdValue);
-		
-		this.changePatientIdValue = changePatientIdValue;
 		
 		this.dcmUnit = DcmUtil.readDcm(inFilePath);
 	}
@@ -56,22 +52,6 @@ public class DcmBuilder {
 		logger.debug(DEBUG_WRITE_RESULT + this.dcmUnit.getPath().toString());
 		DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getPath());
 		logger.trace(TRACE_BUILD_END);
-	}
-
-	
-	
-	/**
-	 * @return the changePatientIdValue
-	 */
-	public String getChangePatientIDValue() {
-		return changePatientIdValue;
-	}
-
-	/**
-	 * @param changePatientIdValue the changePatientIdValue to set
-	 */
-	public void setChangePatientIDValue(String changePatientIdValue) {
-		this.changePatientIdValue = changePatientIdValue;
 	}
 
 	/**

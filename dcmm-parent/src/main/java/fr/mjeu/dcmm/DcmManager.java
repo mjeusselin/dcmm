@@ -64,7 +64,7 @@ public class DcmManager {
 		if(this.inFilePath != null) {
 			// manual mode
 			logger.debug(DEBUG_MANUAL_MODE);
-			DcmBuilder db = new DcmBuilder(this.inFilePath, this.changePatientIdValue);
+			DcmBuilder db = new DcmBuilder(this.inFilePath);
 			DcmStrategy tagChangeStrategy = new DcmTagChange(this.changePatientIdValue);
 			db.addStrategy(tagChangeStrategy);
 			logger.debug(DEBUG_BUILD + inFilePath.toString());
