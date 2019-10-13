@@ -1,6 +1,7 @@
 package fr.mjeu.dcmm;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
+import fr.mjeu.dcmm.monitoring.WatchDir;
 import fr.mjeu.dcmm.strategy.DcmStrategy;
 import fr.mjeu.dcmm.strategy.DcmTagChange;
 import fr.mjeu.dcmm.strategy.DcmWatermark;
@@ -22,6 +24,7 @@ public class DcmManager {
 	
 	private static final String DEBUG_BUILD = "building from file ";
 	private static final String DEBUG_MANUAL_MODE = "entering manual mode";
+	private static final String DEBUG_MONITORING_MODE = "entering monitoring mode";
 	private static final String DEBUG_OUT_FILENAME_SUFFIX_NULL = "no filename suffix, output file(s) will have the same filename than input one(s)";
 	private static final String DEBUG_OUT_FOLDER_NULL = "out folder path string null, output folder to use will be the same as input folder one : ";
 	private static final String TRACE_EXECUTE_BEGIN = "begin execute";
@@ -85,6 +88,14 @@ public class DcmManager {
 			
 			logger.debug(DEBUG_BUILD + inFilePath.toString());
 			db.build();
+		} else {
+			// monitoring mode
+			logger.debug(DEBUG_MONITORING_MODE);
+			try {
+				new WatchDir(inFolderPath, true, this).processEvents();
+			} catch (IOException ie) {
+				throw new DcmException(DcmExceptionMessage.ERROR_MONITORING.getMessage(), ie);
+			}
 		}
 		logger.trace(TRACE_EXECUTE_END);
 	}
@@ -98,8 +109,8 @@ public class DcmManager {
 			// manual mode
 			this.manualMode = true;
 		} catch(CheckerException ce) {
-			// monitoring mode not yet implemented
-			throw new DcmException(DcmExceptionMessage.ERROR_MONITORING_NOT_IMPLEMENTED.getMessage());
+			// monitoring mode
+			this.manualMode = false;
 		}
 	}
 	

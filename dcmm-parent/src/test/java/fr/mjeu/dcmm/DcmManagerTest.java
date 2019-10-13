@@ -194,7 +194,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_filename_null_OK() {
+	public void testConstructor_filename_null_OK() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -210,17 +210,30 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
 					outFolderAbsolutePathStr);
-			fail(); // TODO Monitoring mode not yet implemented
 		} catch (DcmException de) {
-			// TODO Monitoring mode not yet implemented
 			// nothing
 		}
-		assertNull(dcmManager);
-		// TODO Monitoring mode not yet implemented
+		assertNotNull(dcmManager);
+		
+		assertEquals(false, dcmManager.isManualMode());
+		
+		assertEquals(changePatientIdValue, dcmManager.getChangePatientIDValue());
+		
+		assertTrue(dcmManager.isChangePatientIdOverwriteOriginalFile());
+		
+		assertNull(dcmManager.getInFilePath());
+		
+		Path expectedInFolderPath = CheckerUtil.checkFolderExists(inFolderAbsolutePathStr);
+		assertEquals(expectedInFolderPath, dcmManager.getInFolderPath());
+		
+		assertEquals(outFilenameSuffix, dcmManager.getOutFilenameSuffix());
+		
+		Path expectedOutFolderPath = CheckerUtil.checkFolderExists(outFolderAbsolutePathStr);
+		assertEquals(expectedOutFolderPath, dcmManager.getOutFolderPath());
 	}
 	
 	@Test
-	public void testConstructor_filename_empty_OK() {
+	public void testConstructor_filename_empty_OK() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -236,13 +249,26 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
 					outFolderAbsolutePathStr);
-			fail(); // TODO Monitoring mode not yet implemented
 		} catch (DcmException de) {
 			// nothing
-			// TODO Monitoring mode not yet implemented
 		}
-		assertNull(dcmManager);		
-		// TODO Monitoring mode not yet implemented
+		assertNotNull(dcmManager);
+		
+		assertEquals(false, dcmManager.isManualMode());
+		
+		assertEquals(changePatientIdValue, dcmManager.getChangePatientIDValue());
+		
+		assertTrue(dcmManager.isChangePatientIdOverwriteOriginalFile());
+		
+		assertNull(dcmManager.getInFilePath());
+		
+		Path expectedInFolderPath = CheckerUtil.checkFolderExists(inFolderAbsolutePathStr);
+		assertEquals(expectedInFolderPath, dcmManager.getInFolderPath());
+		
+		assertEquals(outFilenameSuffix, dcmManager.getOutFilenameSuffix());
+		
+		Path expectedOutFolderPath = CheckerUtil.checkFolderExists(outFolderAbsolutePathStr);
+		assertEquals(expectedOutFolderPath, dcmManager.getOutFolderPath());
 	}
 	
 	@Test
