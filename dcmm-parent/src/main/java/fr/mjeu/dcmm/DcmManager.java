@@ -74,20 +74,7 @@ public class DcmManager {
 		if(this.inFilePath != null) {
 			// manual mode
 			logger.debug(DEBUG_MANUAL_MODE);
-			Path outFilePath = DcmOutFilePathUtil.getOutFilePath(this.inFilePath, this.outFilenameSuffix, this.outFolderPath);
-			DcmBuilder db = new DcmBuilder(this.inFilePath, outFilePath);
-			
-			// add strategy which changes patient id tag value
-			DcmStrategy tagChangeStrategy = new DcmTagChange(this.changePatientIdValue, this.changePatientIdOverwriteOriginalFile);
-			db.addStrategy(tagChangeStrategy);
-			
-			// add strategy which watermark png image vertically centered on the right border
-			Path imagePath = Paths.get(RELATIVE_PATH_LOGO);
-			DcmStrategy watermarkLogoStrategy = new DcmWatermark(imagePath);
-			db.addStrategy(watermarkLogoStrategy);
-			
-			logger.debug(DEBUG_BUILD + inFilePath.toString());
-			db.build();
+			this.processInputFile(this.inFilePath);
 		} else {
 			// monitoring mode
 			logger.debug(DEBUG_MONITORING_MODE);
@@ -98,6 +85,47 @@ public class DcmManager {
 			}
 		}
 		logger.trace(TRACE_EXECUTE_END);
+	}
+	
+	/**
+	 * This public method enable watch dir to notify manager there is a file to process
+	 * @param inFilePath
+	 * @throws DcmException
+	 */
+	public void notifyInputFileToProcess(Path inFilePath) throws DcmException {
+		CheckerUtil.checkFileExistsFromPath(inFilePath);
+		this.processInputFile(inFilePath);
+	}
+	
+	/**
+	 * Create new builder for this input file
+	 * This builder contains two strategies :
+	 *     - first strategy is used to change patient id tag value depending on application property
+	 *     - second strategy is used to include a small PNG image vertically centered
+	 * @param inFilePath path object corresponding to input file to process
+	 * @throws DcmException
+	 */
+	private void processInputFile(Path inFilePath) throws DcmException {
+		
+		
+		// create a new builder with input file path and output file path
+		// output file path can be the same than input file path or not
+		// output file can have a suffix depending on application properties
+		Path outFilePath = DcmOutFilePathUtil.getOutFilePath(inFilePath, this.outFilenameSuffix, this.outFolderPath);
+		DcmBuilder db = new DcmBuilder(inFilePath, outFilePath);
+		
+		// add strategy which changes patient id tag value
+		DcmStrategy tagChangeStrategy = new DcmTagChange(this.changePatientIdValue, this.changePatientIdOverwriteOriginalFile);
+		db.addStrategy(tagChangeStrategy);
+		
+		// add strategy which watermarks png image vertically centered on the right border
+		Path imagePath = Paths.get(RELATIVE_PATH_LOGO);
+		DcmStrategy watermarkLogoStrategy = new DcmWatermark(imagePath);
+		db.addStrategy(watermarkLogoStrategy);
+		
+		logger.debug(DEBUG_BUILD + inFilePath.toString());
+		db.build();
+		
 	}
 	
 	/**

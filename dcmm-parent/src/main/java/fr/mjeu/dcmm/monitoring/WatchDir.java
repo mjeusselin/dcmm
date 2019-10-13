@@ -42,6 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.mjeu.dcmm.DcmManager;
+import fr.mjeu.dcmm.exception.DcmException;
 
 /**
  * Class used to monitor a directory and read all the DICOM files from it
@@ -61,6 +62,7 @@ public class WatchDir {
 	private static final String DEBUG_SCANNING = "scanning {} ...";
 	private static final String DEBUG_SCANNING_DONE = "scanning done";
 	private static final String ERROR_WATCH_KEY_NOT_RECOGNIZED = "WatchKey not recognized";
+	private static final String ERROR_PROCESSING_FILE = "error processing file {}";
 	private static final String WARN_OVERFLOW = "events might have been lost or discarded";
 	
     private final WatchService watcher;
@@ -154,7 +156,6 @@ public class WatchDir {
             for (WatchEvent<?> event: key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
 
-                // TBD - provide example of how OVERFLOW event is handled
                 if (kind == OVERFLOW) {
                 	logger.warn(WARN_OVERFLOW);
                     continue;
@@ -167,6 +168,13 @@ public class WatchDir {
 
                 // print out event
                 logger.debug(DEBUG_EVENT, event.kind().name(), child);
+                try {
+                	this.dcmManager.notifyInputFileToProcess(child);
+                } catch (DcmException d){
+                	logger.error(ERROR_PROCESSING_FILE, child.toString());
+                	logger.error(d.getMessage());
+                	logger.error(d.getStackTrace().toString());
+                }
 
                 // if directory is created, and watching recursively, then
                 // register it and its sub-directories
