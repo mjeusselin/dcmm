@@ -2,6 +2,7 @@ package fr.mjeu.dcmm.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.dcm4che3.io.DicomInputStream;
@@ -95,8 +96,12 @@ public class DcmUtil {
 		DicomOutputStream dos = null;
 		
 		if(f != null) {
+			
 			try {
 			
+				// delete if already exists
+				Files.deleteIfExists(p);
+				
 				dos = new DicomOutputStream(f);
 				if(dos != null) {
 					
