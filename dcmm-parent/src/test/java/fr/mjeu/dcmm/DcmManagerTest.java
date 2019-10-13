@@ -169,6 +169,32 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
+	public void testConstructor_change_patient_id_overwrite_original_file_monitoring_KO() throws DcmException {
+		DcmManager dcmManager = null;
+		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
+		String changePatientIdOverwriteOriginalFile = "true";
+		String inFilename = "";
+		String inFolderAbsolutePathStr = workFolderPathStr;
+		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
+		String outFolderAbsolutePathStr = outFolderPathStr;
+		try {
+			dcmManager = new DcmManager(
+					changePatientIdValue,
+					changePatientIdOverwriteOriginalFile,
+					inFilename,
+					inFolderAbsolutePathStr,
+					outFilenameSuffix,
+					outFolderAbsolutePathStr);
+			fail();
+		} catch (DcmException de) {
+			// nothing
+		}
+		
+		assertNull(dcmManager);
+		
+	}
+	
+	@Test
 	public void testConstructor_file_not_exists_KO() {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
@@ -197,7 +223,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	public void testConstructor_filename_null_OK() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
-		String changePatientIdOverwriteOriginalFile = "true";
+		String changePatientIdOverwriteOriginalFile = "false";
 		String inFilename = null;
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
@@ -219,7 +245,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		
 		assertEquals(changePatientIdValue, dcmManager.getChangePatientIDValue());
 		
-		assertTrue(dcmManager.isChangePatientIdOverwriteOriginalFile());
+		assertFalse(dcmManager.isChangePatientIdOverwriteOriginalFile());
 		
 		assertNull(dcmManager.getInFilePath());
 		
@@ -236,7 +262,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	public void testConstructor_filename_empty_OK() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
-		String changePatientIdOverwriteOriginalFile = "true";
+		String changePatientIdOverwriteOriginalFile = "false";
 		String inFilename = "";
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
@@ -258,7 +284,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		
 		assertEquals(changePatientIdValue, dcmManager.getChangePatientIDValue());
 		
-		assertTrue(dcmManager.isChangePatientIdOverwriteOriginalFile());
+		assertFalse(dcmManager.isChangePatientIdOverwriteOriginalFile());
 		
 		assertNull(dcmManager.getInFilePath());
 		

@@ -49,11 +49,12 @@ public class DcmManager {
 			String outFilenameSuffix,
 			String outFolderAbsolutePathStr) throws DcmException {
 		
-		this.detectManualMode(inFilename); // must be done before setting file path
-		
 		this.detectChangePatientIdValue(changePatientIdValue);
 		
 		this.detectChangePatientIdOverwriteOriginalFile(changePatientIdOverwriteOriginalFile);
+		
+		this.detectManualMode(inFilename); 	// must be done before setting file path 
+											// and after detecting overwrite original file
 		
 		this.detectInFilePath(inFolderAbsolutePathStr, inFilename);
 		
@@ -136,9 +137,15 @@ public class DcmManager {
 			CheckerUtil.checkNotEmpty(inFilename);
 			// manual mode
 			this.manualMode = true;
+			
 		} catch(CheckerException ce) {
 			// monitoring mode
 			this.manualMode = false;
+			
+			// monitoring mode is incompatible with overwriting input file
+			if(this.changePatientIdOverwriteOriginalFile) {
+				throw new DcmException(DcmExceptionMessage.ERROR_MONITORING_INCOMPATIBLE_OVERWRITE.getMessage());
+			}
 		}
 	}
 	

@@ -17,6 +17,10 @@ public enum DcmExceptionMessage {
 	ERROR_FILE_READ("Error reading stream for file : "),
 	ERROR_FILE_WRITE("Error writing stream for file : "),
 	ERROR_MONITORING("Error while monitoring"),
+	ERROR_MONITORING_INCOMPATIBLE_OVERWRITE("Monitoring mode is incompatible with overwriting input file. "
+			+ "Overwriting input file might be detected by watcher as a new file leading to an infinite loop process. "
+			+ "Try passing dcm.change.patient.id.overwrite.original.file property to false in application.properties "
+			+ "or using manual mode."),
 	ERROR_FOLDER_NOT_EXISTS_OR_NOT_READABLE_OR_WTRITABLE("Folder doesn't exist or is not readable / writable : "),
 	ERROR_GLOBAL("An error has happened."),
 	ERROR_INPUT_STREAM_CLOSE("Error closing input stream."),
