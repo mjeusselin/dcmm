@@ -59,8 +59,9 @@ public class WatchDir {
 	private static final String DEBUG_EVENT = "{} : {}";
 	private static final String DEBUG_REGISTER_DIR = "register directory : {}";
 	private static final String DEBUG_REGISTER_UPDATE_DIR = "update : {} -> {}";
-	private static final String DEBUG_SCANNING = "scanning {} ...";
+	private static final String DEBUG_SCANNING = "scanning {}";
 	private static final String DEBUG_SCANNING_DONE = "scanning done";
+	private static final String DEBUG_WAITING_FOR_INPUT = "waiting for input in directory {}";
 	private static final String ERROR_WATCH_KEY_NOT_RECOGNIZED = "WatchKey not recognized";
 	private static final String ERROR_PROCESSING_FILE = "error processing file {}";
 	private static final String WARN_OVERFLOW = "events might have been lost or discarded";
@@ -125,6 +126,7 @@ public class WatchDir {
             logger.debug(DEBUG_SCANNING, dir);
             registerAll(dir);
             logger.debug(DEBUG_SCANNING_DONE);
+            logger.debug(DEBUG_WAITING_FOR_INPUT, dir);
         } else {
             register(dir);
         }
@@ -173,7 +175,9 @@ public class WatchDir {
                 } catch (DcmException d){
                 	logger.error(ERROR_PROCESSING_FILE, child.toString());
                 	logger.error(d.getMessage());
-                	logger.error(d.getStackTrace().toString());
+                	if(d.getCause() != null) {
+                		logger.error(d.getCause().getMessage());
+                	}
                 }
 
                 // if directory is created, and watching recursively, then

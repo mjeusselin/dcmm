@@ -24,6 +24,7 @@ public class DcmBuilder {
 	
 	private static final String DEBUG_APPLY_STRATEGIES = "applying strategies";
 	private static final String DEBUG_WRITE_RESULT = "trying to write result in DICOM file : ";
+	private static final String DEBUG_RESULT_WRITTEN = "result written with success : {}";
 	private static final String TRACE_BUILD_BEGIN = "begin build";
 	private static final String TRACE_BUILD_END = "end build";
 
@@ -54,7 +55,8 @@ public class DcmBuilder {
 		
 		// write
 		logger.debug(DEBUG_WRITE_RESULT + this.dcmUnit.getOutFilePath().toString());
-		DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getOutFilePath());
+		boolean resultWritten = DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getOutFilePath());
+		logger.debug(DEBUG_RESULT_WRITTEN, resultWritten);
 		logger.trace(TRACE_BUILD_END);
 	}
 
