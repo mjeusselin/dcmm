@@ -40,6 +40,7 @@ public class DcmManager {
 	private boolean manualMode = false;
 	private String outFilenameSuffix;
 	private Path outFolderPath;
+	private int errorsCounter = 0;
 	
 	public DcmManager(
 			String changePatientIdValue,
@@ -79,11 +80,7 @@ public class DcmManager {
 		} else {
 			// monitoring mode
 			logger.debug(DEBUG_MONITORING_MODE);
-			try {
-				new WatchDir(inFolderPath, true, this).processEvents();
-			} catch (IOException ie) {
-				throw new DcmException(DcmExceptionMessage.ERROR_MONITORING.getMessage(), ie);
-			}
+			new WatchDir(inFolderPath, true, this).processEvents();
 		}
 		logger.trace(TRACE_EXECUTE_END);
 	}
@@ -231,6 +228,17 @@ public class DcmManager {
 	 */
 	public boolean isChangePatientIdOverwriteOriginalFile() {
 		return changePatientIdOverwriteOriginalFile;
+	}
+
+	/**
+	 * @return the errorsCounter
+	 */
+	public int getErrorsCounter() {
+		return errorsCounter;
+	}
+	
+	public void incrementErrorCounter() {
+		this.errorsCounter++;
 	}
 
 	/**

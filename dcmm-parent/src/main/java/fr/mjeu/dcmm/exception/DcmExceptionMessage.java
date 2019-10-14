@@ -16,7 +16,7 @@ public enum DcmExceptionMessage {
 	ERROR_FILE_NULL("File is null : "),
 	ERROR_FILE_READ("Error reading stream for file : "),
 	ERROR_FILE_WRITE("Error writing stream for file : "),
-	ERROR_MONITORING("Error while monitoring"),
+	ERROR_INITIALIZING_WATCHER_SERVICE("Error initializing watcher service"),
 	ERROR_MONITORING_INCOMPATIBLE_OVERWRITE("Monitoring mode is incompatible with overwriting input file. "
 			+ "Overwriting input file might be detected by watcher as a new file leading to an infinite loop process. "
 			+ "Try passing dcm.change.patient.id.overwrite.original.file property to false in application.properties "
@@ -30,6 +30,8 @@ public enum DcmExceptionMessage {
 	ERROR_NULL_OR_EMPTY("String is null or empty."),
 	ERROR_OUTPUT_STREAM_CLOSE("Error closing output stream."),
 	ERROR_PATH_NULL("Path null"),
+	ERROR_REGISTER_DIR("Error registering dir : "),
+	ERROR_WATCH_SERVICE_CLOSE("Error closing wather service"),
 	ERROR_WATERMARK("Error when watermarking DICOM : ");
 	
 	private String message;

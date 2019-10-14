@@ -18,6 +18,7 @@ public class DcmPrepareTest extends DcmTest {
 	protected static String RELATIVE_TARGET_FOLDER_PATH = ".."+S+".."+S+".."+S+".."+S+".."+S;
 	protected static String OUT_FILENAME_SUFFIX = "2";
 	protected static String OUT_FOLDER_NAME = "outFolder";
+	protected static String TEST_CHANGE_PATIENT_ID_VALUE_TAG = "Hera-MI3";
 	protected static String WORK_FOLDER_NAME = "workFolder";
 	
 	protected static Path outFolderPath = null;
@@ -112,6 +113,11 @@ public class DcmPrepareTest extends DcmTest {
 		Path file15Path = DcmFileUtil.getPath(file15PathStr);
 		Path file15CopyPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_15_MO);
 		Files.copy(file15Path, file15CopyPath);
+		
+		String file21PathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_OK + FILENAME_EXAMPLE_21_MO);
+		Path file21Path = DcmFileUtil.getPath(file21PathStr);
+		Path file21CopyPath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_21_MO);
+		Files.copy(file21Path, file21CopyPath);
 		
 		String fileLogoPathStr = getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_EXAMPLES_IMAGES + FILENAME_EXAMPLE_LOGO);
 		Path fileLogoPath = DcmFileUtil.getPath(fileLogoPathStr);

@@ -43,6 +43,8 @@ import org.slf4j.LoggerFactory;
 
 import fr.mjeu.dcmm.DcmManager;
 import fr.mjeu.dcmm.exception.DcmException;
+import fr.mjeu.dcmm.exception.DcmExceptionMessage;
+import fr.mjeu.dcmm.util.CheckerUtil;
 
 /**
  * Class used to monitor a directory and read all the DICOM files from it
@@ -116,20 +118,35 @@ public class WatchDir {
     /**
      * Creates a WatchService and registers the given directory
      */
-    public WatchDir(Path dir, boolean recursive, DcmManager dcmManager) throws IOException {
-        this.watcher = FileSystems.getDefault().newWatchService();
+    public WatchDir(Path dir, boolean recursive, DcmManager dcmManager) throws DcmException {
+        CheckerUtil.checkNotNull(dir);
+    	CheckerUtil.checkFolderExists(dir.toString());
+    	CheckerUtil.checkNotNull(dcmManager);
+    	
+    	try {
+    		this.watcher = FileSystems.getDefault().newWatchService();
+    	} catch (IOException ie) {
+    		throw new DcmException(DcmExceptionMessage.ERROR_INITIALIZING_WATCHER_SERVICE.getMessage(), ie);
+    	}
+    	
+    	
         this.keys = new HashMap<WatchKey,Path>();
         this.recursive = recursive;
         this.dcmManager = dcmManager;
 
-        if (recursive) {
-            logger.debug(DEBUG_SCANNING, dir);
-            registerAll(dir);
-            logger.debug(DEBUG_SCANNING_DONE);
-            logger.debug(DEBUG_WAITING_FOR_INPUT, dir);
-        } else {
-            register(dir);
-        }
+        try {
+	        if (recursive) {
+	            logger.debug(DEBUG_SCANNING, dir);
+	            registerAll(dir);
+	            logger.debug(DEBUG_SCANNING_DONE);
+	            logger.debug(DEBUG_WAITING_FOR_INPUT, dir);
+	        } else {
+	            register(dir);
+	        }
+        } catch (IOException ie) {
+    		throw new DcmException(DcmExceptionMessage.ERROR_REGISTER_DIR.getMessage() + dir.toString(), ie);
+    	}
+        
 
         // enable trace after initial registration
         this.trace = true;
@@ -173,6 +190,7 @@ public class WatchDir {
                 try {
                 	this.dcmManager.notifyInputFileToProcess(child);
                 } catch (DcmException d){
+                	this.dcmManager.incrementErrorCounter();
                 	logger.error(ERROR_PROCESSING_FILE, child.toString());
                 	logger.error(d.getMessage());
                 	if(d.getCause() != null) {
@@ -204,5 +222,17 @@ public class WatchDir {
                 }
             }
         }
+    }
+    
+    /**
+     * Close watcher service
+     * 
+     */
+    public void closeWatcherService() throws DcmException {
+    	try {
+    		this.watcher.close();
+    	} catch (IOException ie) {
+    		throw new DcmException(DcmExceptionMessage.ERROR_WATCH_SERVICE_CLOSE.getMessage(), ie);
+    	}
     }
 }

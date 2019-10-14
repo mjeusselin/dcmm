@@ -21,8 +21,6 @@ import fr.mjeu.dcmm.util.CheckerUtil;
  *
  */
 public class DcmManagerTest extends DcmPrepareTest {
-
-	private static final String TEST_CHANGE_PATIENT_ID_VALUE_TAG = "Hera-MI3";
 	
 	@Test
 	public void testConstructor_OK() throws DcmException {
