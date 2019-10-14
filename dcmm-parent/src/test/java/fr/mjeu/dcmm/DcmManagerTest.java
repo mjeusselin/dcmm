@@ -8,11 +8,18 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 
+import org.dcm4che3.data.Attributes;
+import org.dcm4che3.data.Tag;
 import org.junit.jupiter.api.Test;
 
 import fr.mjeu.dcmm.exception.DcmException;
+import fr.mjeu.dcmm.model.DcmUnit;
+import fr.mjeu.dcmm.strategy.DcmTagChange;
 import fr.mjeu.dcmm.util.CheckerUtil;
+import fr.mjeu.dcmm.util.DcmFileUtil;
+import fr.mjeu.dcmm.util.DcmUtil;
 
 /**
  * Test class for DcmManager
@@ -368,7 +375,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testExecute_OK() {
+	public void testExecute_manual_mode_OK() {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -387,6 +394,117 @@ public class DcmManagerTest extends DcmPrepareTest {
 			dcmManager.execute();
 		} catch (DcmException de) {
 			fail();
+		}
+		assertNotNull(dcmManager);		
+	}
+	
+	@Test
+	public void testNotifyInputFileToProcess_OK() throws DcmException {
+		DcmManager dcmManager = null;
+		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
+		String changePatientIdOverwriteOriginalFile = "false";
+		String inFilename = "";
+		String inFolderAbsolutePathStr = workFolderPathStr;
+		String outFilenameSuffix = "";
+		String outFolderAbsolutePathStr = outFolderPathStr;
+		
+		DcmUnit expectedDcmUnit = null;
+		Path expectedOutFilePath = null;
+		Path inFilePath = null;
+		Path outFilePath = null;
+		DcmUnit outDcmUnit = null;
+		
+		
+		try {
+			dcmManager = new DcmManager(
+					changePatientIdValue,
+					changePatientIdOverwriteOriginalFile,
+					inFilename,
+					inFolderAbsolutePathStr,
+					outFilenameSuffix,
+					outFolderAbsolutePathStr);
+			inFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_28_MO);
+			
+			// process
+			dcmManager.notifyInputFileToProcess(inFilePath);
+			
+			// expected result
+			expectedOutFilePath = DcmFileUtil.getPath(getAbsolutePathStringOfTestResource(PATH_STR_FOLDER_UTIL + FILENAME_EXAMPLE_28_MO_WITH_TAG_AND_LOGO));
+			expectedDcmUnit = DcmUtil.readDcm(expectedOutFilePath);
+			byte[] expectedPixels = (byte[]) expectedDcmUnit.getDataset().getValue(Tag.PixelData);
+			
+			// result
+			outFilePath = DcmFileUtil.getPath(outFolderPathStr, FILENAME_EXAMPLE_28_MO);
+			outDcmUnit = DcmUtil.readDcm(outFilePath);
+			byte[] outPixels = (byte[]) outDcmUnit.getDataset().getValue(Tag.PixelData);
+			
+			// test tag
+			assertNotNull(outDcmUnit);
+			Attributes dataset = outDcmUnit.getDataset();
+			assertNotNull(dataset);
+			assertEquals(
+					TEST_CHANGE_PATIENT_ID_VALUE_TAG,
+					dataset.getString(DcmTagChange.dataElementTag));
+			
+			// test logo
+			// comparison between pixels just computed and expected pixels of a DICOM with logo
+			assertTrue(Arrays.equals(expectedPixels, outPixels));
+			
+			
+		} catch (DcmException de) {
+			fail();
+		}
+		assertNotNull(dcmManager);		
+	}
+	
+	@Test
+	public void testNotifyInputFileToProcess_file_path_null_KO() throws DcmException {
+		DcmManager dcmManager = null;
+		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
+		String changePatientIdOverwriteOriginalFile = "false";
+		String inFilename = "";
+		String inFolderAbsolutePathStr = workFolderPathStr;
+		String outFilenameSuffix = "";
+		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path inFilePath = null;
+		dcmManager = new DcmManager(
+				changePatientIdValue,
+				changePatientIdOverwriteOriginalFile,
+				inFilename,
+				inFolderAbsolutePathStr,
+				outFilenameSuffix,
+				outFolderAbsolutePathStr);
+		try {
+			dcmManager.notifyInputFileToProcess(inFilePath);
+			fail();
+		} catch (DcmException de) {
+			// nothing
+		}
+		assertNotNull(dcmManager);		
+	}
+	
+	@Test
+	public void testNotifyInputFileToProcess_file_path_not_exists_KO() throws DcmException {
+		DcmManager dcmManager = null;
+		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
+		String changePatientIdOverwriteOriginalFile = "false";
+		String inFilename = "";
+		String inFolderAbsolutePathStr = workFolderPathStr;
+		String outFilenameSuffix = "";
+		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path inFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_28_MO + "ko");
+		dcmManager = new DcmManager(
+				changePatientIdValue,
+				changePatientIdOverwriteOriginalFile,
+				inFilename,
+				inFolderAbsolutePathStr,
+				outFilenameSuffix,
+				outFolderAbsolutePathStr);
+		try {
+			dcmManager.notifyInputFileToProcess(inFilePath);
+			fail();
+		} catch (DcmException de) {
+			// nothing
 		}
 		assertNotNull(dcmManager);		
 	}

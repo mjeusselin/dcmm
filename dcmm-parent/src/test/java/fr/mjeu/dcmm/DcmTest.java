@@ -13,8 +13,10 @@ public class DcmTest {
 	protected static String FILENAME_EXTENSION_DCM_KO = ".png";
 	protected static String FILENAME_EXAMPLE_15_MO = "ge-0001-0000-00000000.dcm";
 	protected static String FILENAME_EXAMPLE_15_MO_WITH_LOGO = "ge-0001-0000-00000000_with_logo.dcm";
+	protected static String FILENAME_EXAMPLE_15_MO_WITH_TAG_AND_LOGO = "ge-0001-0000-00000000_with_tag_and_logo.dcm";
 	protected static String FILENAME_EXAMPLE_21_MO = "planmed-200064.424.dcm";
 	protected static String FILENAME_EXAMPLE_28_MO = "hologic-MG02.dcm";
+	protected static String FILENAME_EXAMPLE_28_MO_WITH_TAG_AND_LOGO = "hologic-MG02_with_tag_and_logo.dcm";
 	protected static String FILENAME_EXAMPLE_57_MO = "fuji-50333032.466243176.dcm";
 	protected static String FILENAME_FILE_EXISTS_OK = "file.dcm";
 	protected static String FILENAME_FILE_DOES_NOT_EXIST_KO = "fileDoesNotExist.dcm";
