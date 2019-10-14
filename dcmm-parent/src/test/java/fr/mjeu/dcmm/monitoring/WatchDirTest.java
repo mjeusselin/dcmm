@@ -1,5 +1,7 @@
 package fr.mjeu.dcmm.monitoring;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
@@ -43,6 +45,7 @@ public class WatchDirTest extends DcmPrepareTest {
 		} catch (DcmException de) {
 			fail();
 		}
+		assertNotNull(watchDir);
 	}
 	
 	@Test
@@ -70,6 +73,7 @@ public class WatchDirTest extends DcmPrepareTest {
 		} catch (DcmException de) {
 			// nothing
 		}
+		assertNull(watchDir);
 	}
 	
 	@Test
@@ -97,6 +101,7 @@ public class WatchDirTest extends DcmPrepareTest {
 		} catch (DcmException de) {
 			// nothing
 		}
+		assertNull(watchDir);
 	}
 	
 	@Test
@@ -111,41 +116,7 @@ public class WatchDirTest extends DcmPrepareTest {
 		} catch (DcmException de) {
 			// nothing
 		}
-	}
-	
-	@Test
-	public void testCloseWathcherService_OK() throws DcmException {
-		WatchDir watchDir = null;
-		Path dir = workFolderPath;
-		boolean recursive = false;
-		DcmManager dcmManager = null;
-		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
-		String changePatientIdOverwriteOriginalFile = "false";
-		String inFilename = "";
-		String inFolderAbsolutePathStr = workFolderPathStr;
-		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
-		String outFolderAbsolutePathStr = outFolderPathStr;
-		dcmManager = new DcmManager(
-				changePatientIdValue,
-				changePatientIdOverwriteOriginalFile,
-				inFilename,
-				inFolderAbsolutePathStr,
-				outFilenameSuffix,
-				outFolderAbsolutePathStr);
-		watchDir = new WatchDir(dir, recursive, dcmManager);
-		try {
-			watchDir.closeWatcherService();
-		} catch (DcmException de) {
-			fail();
-		}
-		
-		// try to close already close watcher service
-		try {
-			watchDir.processEvents();
-			fail();
-		} catch (Exception e) {
-			// nothing
-		}
+		assertNull(watchDir);
 	}
 	
 }

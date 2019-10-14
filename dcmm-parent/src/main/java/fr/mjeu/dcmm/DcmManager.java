@@ -1,7 +1,6 @@
 package fr.mjeu.dcmm;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -40,7 +39,6 @@ public class DcmManager {
 	private boolean manualMode = false;
 	private String outFilenameSuffix;
 	private Path outFolderPath;
-	private int errorsCounter = 0;
 	
 	public DcmManager(
 			String changePatientIdValue,
@@ -228,17 +226,6 @@ public class DcmManager {
 	 */
 	public boolean isChangePatientIdOverwriteOriginalFile() {
 		return changePatientIdOverwriteOriginalFile;
-	}
-
-	/**
-	 * @return the errorsCounter
-	 */
-	public int getErrorsCounter() {
-		return errorsCounter;
-	}
-	
-	public void incrementErrorCounter() {
-		this.errorsCounter++;
 	}
 
 	/**

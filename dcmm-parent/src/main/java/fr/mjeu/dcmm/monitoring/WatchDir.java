@@ -173,7 +173,8 @@ public class WatchDir {
             }
 
             for (WatchEvent<?> event: key.pollEvents()) {
-                WatchEvent.Kind kind = event.kind();
+                @SuppressWarnings("rawtypes")
+				WatchEvent.Kind kind = event.kind();
 
                 if (kind == OVERFLOW) {
                 	logger.warn(WARN_OVERFLOW);
@@ -190,7 +191,6 @@ public class WatchDir {
                 try {
                 	this.dcmManager.notifyInputFileToProcess(child);
                 } catch (DcmException d){
-                	this.dcmManager.incrementErrorCounter();
                 	logger.error(ERROR_PROCESSING_FILE, child.toString());
                 	logger.error(d.getMessage());
                 	if(d.getCause() != null) {
@@ -222,17 +222,5 @@ public class WatchDir {
                 }
             }
         }
-    }
-    
-    /**
-     * Close watcher service
-     * 
-     */
-    public void closeWatcherService() throws DcmException {
-    	try {
-    		this.watcher.close();
-    	} catch (IOException ie) {
-    		throw new DcmException(DcmExceptionMessage.ERROR_WATCH_SERVICE_CLOSE.getMessage(), ie);
-    	}
     }
 }
