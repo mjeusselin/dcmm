@@ -1,10 +1,15 @@
 package fr.mjeu.dcmm;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
+import fr.mjeu.dcmm.dao.TraceDto;
+import fr.mjeu.dcmm.enumeration.TraceEventEnum;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 import fr.mjeu.dcmm.model.DcmUnit;
@@ -29,9 +34,15 @@ public class DcmBuilder {
 	private static final String DEBUG_RESULT_WRITTEN = "result written with success : {}";
 	private static final String TRACE_BUILD_BEGIN = "begin build";
 	private static final String TRACE_BUILD_END = "end build";
-
+	
+	private AbstractApplicationContext context;
 	private DcmUnit dcmUnit;
 	private ArrayList<DcmStrategy> strategies = new ArrayList<>();
+	private TraceDao traceDao;
+	
+	public DcmBuilder() {
+		
+	}
 	
 	public DcmBuilder(Path inFilePath, Path outFilePath) throws DcmException {
 		CheckerUtil.checkFileExistsFromPath(inFilePath);
@@ -41,6 +52,8 @@ public class DcmBuilder {
 		this.dcmUnit = DcmUtil.readDcm(inFilePath);
 		this.dcmUnit.setOutFilePath(outFilePath);
 		
+		this.context = new AnnotationConfigApplicationContext(DaoConfig.class);
+		this.traceDao = (TraceDaoImpl) context.getBean("traceDaoImpl");
 	}
 	
 	/**
@@ -68,6 +81,9 @@ public class DcmBuilder {
 		logger.debug(DEBUG_WRITE_RESULT_OUTPUT + this.dcmUnit.getOutFilePath().toString());
 		boolean resultWrittenOutput = DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getOutFilePath());
 		logger.debug(DEBUG_RESULT_WRITTEN, resultWrittenOutput);
+		
+		createWriteOutputTrace(this.dcmUnit);
+		
 		logger.trace(TRACE_BUILD_END);
 	}
 
@@ -103,6 +119,19 @@ public class DcmBuilder {
 	 */
 	public void setStrategies(ArrayList<DcmStrategy> strategies) {
 		this.strategies = strategies;
+	}
+	
+	/**
+	 * Create write output event trace
+	 * @param unit
+	 */
+	private void createWriteOutputTrace(DcmUnit unit) {
+		TraceDto trace = new TraceDto();
+		trace.setInputFilePathStr(unit.getInFilePath().toString());
+		trace.setOutputFilePathStr(unit.getOutFilePath().toString());
+		trace.setTraceCreationDateTime(LocalDateTime.now());
+		trace.setTraceEvent(TraceEventEnum.WRITE_OUTPUT_RESULT.getType());
+		this.traceDao.createTrace(trace);
 	}
 	
 }

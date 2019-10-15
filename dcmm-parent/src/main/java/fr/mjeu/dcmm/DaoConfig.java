@@ -1,15 +1,21 @@
-package fr.mjeu.dcmm.dao;
+package fr.mjeu.dcmm;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.mongodb.MongoClient;
 
 @Configuration
+@ComponentScan(basePackages = {"fr.mjeu.dcmm"})
+@EnableMongoRepositories(basePackages = {"fr.mjeu.dcmm"})
 @PropertySource("classpath:application.properties")
 public class DaoConfig {
 	@Value( "${mongo.server}" )
@@ -21,12 +27,16 @@ public class DaoConfig {
 	@Value( "${mongo.database}" )
 	private String mongoDatabase;
 	
-	public @Bean MongoClient mongoClient() {
-		return new MongoClient(this.mongoServer, this.mongoPort);
+	@Bean
+	public MongoDbFactory mongoDbFactory() {
+		MongoClient mongoClient = new MongoClient(mongoServer, mongoPort);
+		return new SimpleMongoDbFactory(mongoClient, mongoDatabase);
 	}
 	
-	public @Bean MongoTemplate mongoTemplate() {
-		return new MongoTemplate(mongoClient(), this.mongoDatabase);
+	@Bean
+	public MongoTemplate mongoTemplate() {
+		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
+		return mongoTemplate;
 	}
 	
 	@Bean
