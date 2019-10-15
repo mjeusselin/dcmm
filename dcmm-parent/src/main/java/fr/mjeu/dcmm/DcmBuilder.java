@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import fr.mjeu.dcmm.dao.TraceDto;
 import fr.mjeu.dcmm.enumeration.TraceEventEnum;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 import fr.mjeu.dcmm.model.DcmUnit;
+import fr.mjeu.dcmm.mongo.dao.DaoConfig;
+import fr.mjeu.dcmm.mongo.dao.TraceDao;
+import fr.mjeu.dcmm.mongo.dao.impl.TraceDaoImpl;
+import fr.mjeu.dcmm.mongo.model.TraceDto;
 import fr.mjeu.dcmm.strategy.DcmStrategy;
 import fr.mjeu.dcmm.util.CheckerUtil;
 import fr.mjeu.dcmm.util.DcmUtil;

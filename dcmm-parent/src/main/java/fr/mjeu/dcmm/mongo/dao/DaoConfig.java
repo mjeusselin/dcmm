@@ -1,4 +1,4 @@
-package fr.mjeu.dcmm;
+package fr.mjeu.dcmm.mongo.dao;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

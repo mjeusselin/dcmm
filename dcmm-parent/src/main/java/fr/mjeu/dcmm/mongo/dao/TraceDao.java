@@ -1,6 +1,6 @@
-package fr.mjeu.dcmm;
+package fr.mjeu.dcmm.mongo.dao;
 
-import fr.mjeu.dcmm.dao.TraceDto;
+import fr.mjeu.dcmm.mongo.model.TraceDto;
 
 public interface TraceDao {
 	public void createTrace(TraceDto trace);

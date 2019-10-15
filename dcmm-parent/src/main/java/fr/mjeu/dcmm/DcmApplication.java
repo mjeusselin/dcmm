@@ -13,8 +13,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.mongodb.MongoClient;
 
-import fr.mjeu.dcmm.dao.TraceDto;
 import fr.mjeu.dcmm.exception.DcmException;
+import fr.mjeu.dcmm.mongo.model.TraceDto;
 
 @SpringBootApplication
 public class DcmApplication {

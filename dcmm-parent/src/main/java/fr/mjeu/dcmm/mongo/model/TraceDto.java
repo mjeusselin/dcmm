@@ -1,4 +1,4 @@
-package fr.mjeu.dcmm.dao;
+package fr.mjeu.dcmm.mongo.model;
 
 import java.time.LocalDateTime;
 

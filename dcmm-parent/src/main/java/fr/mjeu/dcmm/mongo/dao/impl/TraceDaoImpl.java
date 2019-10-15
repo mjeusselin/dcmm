@@ -1,9 +1,11 @@
-package fr.mjeu.dcmm;
+package fr.mjeu.dcmm.mongo.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.mjeu.dcmm.dao.TraceDto;
+import fr.mjeu.dcmm.mongo.dao.TraceDao;
+import fr.mjeu.dcmm.mongo.model.TraceDto;
+import fr.mjeu.dcmm.mongo.repository.TraceRepository;
 
 @Service
 public class TraceDaoImpl implements TraceDao {
