@@ -2,13 +2,18 @@ package fr.mjeu.dcmm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
+import com.mongodb.MongoClient;
+
+import fr.mjeu.dcmm.dao.TraceDto;
 import fr.mjeu.dcmm.exception.DcmException;
 
 @SpringBootApplication
@@ -29,6 +34,9 @@ public class DcmApplication {
 	private static final int STATUS_INIT = -1;
 	private static final int STATUS_SUCCESS = 0;
 	private static final int STATUS_ERROR = 3;
+	
+	@Autowired
+	MongoTemplate mongoTemplate;
 	
 	@Value( "${dcm.change.patient.id.value}" )
 	private String changePatientIdValue;
@@ -64,6 +72,11 @@ public class DcmApplication {
             logger.info(INFO_PARAM_IN_FILENAME+inFilename);
             logger.info(INFO_PARAM_OUT_FOLDER_ABSOLUTE_PATH_STR+outFolderAbsolutePathStr);
             logger.info(INFO_PARAM_OUT_FILENAME_SUFFIX+outFilenameSuffix);
+            
+            TraceDto beginTrace = new TraceDto();
+            beginTrace.setTraceEvent("BEGIN");
+            mongoTemplate.save(beginTrace);
+            
             try {
             	logger.debug(DEBUG_DCMM_INSTANCIATION);
 	            DcmManager dcmm = new DcmManager(
@@ -84,4 +97,12 @@ public class DcmApplication {
             System.exit(status);
         };
     }
+    
+    public @Bean MongoClient mongoClient() {
+		return new MongoClient("localhost");
+	}
+	
+	public @Bean MongoTemplate mongoTemplate() {
+		return new MongoTemplate(mongoClient(), "test");
+	}
 }
