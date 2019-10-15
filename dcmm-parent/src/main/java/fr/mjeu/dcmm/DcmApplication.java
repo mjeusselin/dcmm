@@ -74,7 +74,7 @@ public class DcmApplication {
             logger.info(INFO_PARAM_OUT_FILENAME_SUFFIX+outFilenameSuffix);
             
             TraceDto beginTrace = new TraceDto();
-            beginTrace.setTraceEvent("BEGIN");
+            beginTrace.setTraceEvent("BEGIN3");
             mongoTemplate.save(beginTrace);
             
             try {
@@ -98,11 +98,5 @@ public class DcmApplication {
         };
     }
     
-    public @Bean MongoClient mongoClient() {
-		return new MongoClient("localhost");
-	}
-	
-	public @Bean MongoTemplate mongoTemplate() {
-		return new MongoTemplate(mongoClient(), "test");
-	}
+    
 }
