@@ -37,10 +37,12 @@ public class DcmBuilder {
 	private static final String DEBUG_RESULT_WRITTEN = "result written with success : {}";
 	private static final String TRACE_BUILD_BEGIN = "begin build";
 	private static final String TRACE_BUILD_END = "end build";
+	private static final String TRACE_DAO_IMPL = "traceDaoImpl";
 	
-	private AbstractApplicationContext context;
 	private DcmUnit dcmUnit;
 	private ArrayList<DcmStrategy> strategies = new ArrayList<>();
+	
+	private AbstractApplicationContext context;
 	private TraceDao traceDao;
 	
 	public DcmBuilder() {
@@ -56,7 +58,7 @@ public class DcmBuilder {
 		this.dcmUnit.setOutFilePath(outFilePath);
 		
 		this.context = new AnnotationConfigApplicationContext(DaoConfig.class);
-		this.traceDao = (TraceDaoImpl) context.getBean("traceDaoImpl");
+		this.traceDao = (TraceDaoImpl) context.getBean(TRACE_DAO_IMPL);
 	}
 	
 	/**
@@ -77,6 +79,9 @@ public class DcmBuilder {
 				logger.debug(DEBUG_WRITE_RESULT_INPUT + this.dcmUnit.getInFilePath().toString());
 				boolean resultWrittenInput = DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getInFilePath());
 				logger.debug(DEBUG_RESULT_WRITTEN, resultWrittenInput);
+				if(resultWrittenInput) {
+					createWriteTrace(this.dcmUnit, TraceEventEnum.WRITE_INPUT_RESULT);
+				}
 			}
 		}
 		
@@ -85,7 +90,9 @@ public class DcmBuilder {
 		boolean resultWrittenOutput = DcmUtil.writeDcm(this.dcmUnit, this.dcmUnit.getOutFilePath());
 		logger.debug(DEBUG_RESULT_WRITTEN, resultWrittenOutput);
 		
-		createWriteOutputTrace(this.dcmUnit);
+		if(resultWrittenOutput) {
+			createWriteTrace(this.dcmUnit, TraceEventEnum.WRITE_OUTPUT_RESULT);
+		}
 		
 		logger.trace(TRACE_BUILD_END);
 	}
@@ -125,16 +132,20 @@ public class DcmBuilder {
 	}
 	
 	/**
-	 * Create write output event trace
+	 * Create write input/output event trace
 	 * @param unit
 	 */
-	private void createWriteOutputTrace(DcmUnit unit) {
+	private void createWriteTrace(DcmUnit unit, TraceEventEnum traceEvent) {
 		TraceDto trace = new TraceDto();
+		trace.setTraceCreationDateTime(LocalDateTime.now());
+		trace.setTraceEvent(traceEvent.getType());
 		trace.setInputFilePathStr(unit.getInFilePath().toString());
 		trace.setOutputFilePathStr(unit.getOutFilePath().toString());
-		trace.setTraceCreationDateTime(LocalDateTime.now());
-		trace.setTraceEvent(TraceEventEnum.WRITE_OUTPUT_RESULT.getType());
-		this.traceDao.createTrace(trace);
+		try {
+			this.traceDao.createTrace(trace);
+		} catch (Exception e) {
+			logger.debug(trace.toString());
+		}
 	}
 	
 }

@@ -35,9 +35,6 @@ public class DcmApplication {
 	private static final int STATUS_SUCCESS = 0;
 	private static final int STATUS_ERROR = 3;
 	
-	@Autowired
-	MongoTemplate mongoTemplate;
-	
 	@Value( "${dcm.change.patient.id.value}" )
 	private String changePatientIdValue;
 	
@@ -72,10 +69,6 @@ public class DcmApplication {
             logger.info(INFO_PARAM_IN_FILENAME+inFilename);
             logger.info(INFO_PARAM_OUT_FOLDER_ABSOLUTE_PATH_STR+outFolderAbsolutePathStr);
             logger.info(INFO_PARAM_OUT_FILENAME_SUFFIX+outFilenameSuffix);
-            
-            TraceDto beginTrace = new TraceDto();
-            beginTrace.setTraceEvent("BEGIN3");
-            mongoTemplate.save(beginTrace);
             
             try {
             	logger.debug(DEBUG_DCMM_INSTANCIATION);

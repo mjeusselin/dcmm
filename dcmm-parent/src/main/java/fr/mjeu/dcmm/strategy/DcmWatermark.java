@@ -13,6 +13,7 @@ import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -24,11 +25,18 @@ import org.dcm4che3.data.VR;
 import org.dcm4che3.imageio.plugins.dcm.DicomImageReadParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
+import fr.mjeu.dcmm.enumeration.TraceEventEnum;
 import fr.mjeu.dcmm.exception.CheckerException;
 import fr.mjeu.dcmm.exception.DcmException;
 import fr.mjeu.dcmm.exception.DcmExceptionMessage;
 import fr.mjeu.dcmm.model.DcmUnit;
+import fr.mjeu.dcmm.mongo.dao.DaoConfig;
+import fr.mjeu.dcmm.mongo.dao.TraceDao;
+import fr.mjeu.dcmm.mongo.dao.impl.TraceDaoImpl;
+import fr.mjeu.dcmm.mongo.model.TraceDto;
 import fr.mjeu.dcmm.util.CheckerUtil;
 
 /**
@@ -41,17 +49,24 @@ public class DcmWatermark implements DcmStrategy {
 
 	static Logger logger = LoggerFactory.getLogger(DcmWatermark.class);
 	
-	private static String DEBUG_EXECUTE = "watermarking Hera-MI logo";
-	private static String DICOM_FORMAT_NAME = "DICOM";
-	private static String TRACE_EX_BEGIN = "begin execute with params : ";
-	private static String TRACE_EX_END = "end execute";
+	private static final String DEBUG_EXECUTE = "watermarking Hera-MI logo";
+	private static final String DICOM_FORMAT_NAME = "DICOM";
+	private static final String TRACE_EX_BEGIN = "begin execute with params : ";
+	private static final String TRACE_EX_END = "end execute";
+	private static final String TRACE_DAO_IMPL = "traceDaoImpl";
 	
 	private Path imagePath;
+	
+	private AbstractApplicationContext context;
+	private TraceDao traceDao;
 	
 	public DcmWatermark(Path imagePath) throws CheckerException {
 		CheckerUtil.checkFileExistsFromPath(imagePath);
 		CheckerUtil.checkFilenamePngExtension(imagePath.getFileName().toString());
 		this.imagePath = imagePath;
+		
+		this.context = new AnnotationConfigApplicationContext(DaoConfig.class);
+		this.traceDao = (TraceDaoImpl) context.getBean(TRACE_DAO_IMPL);
 	}
 	
 	@Override
@@ -107,6 +122,8 @@ public class DcmWatermark implements DcmStrategy {
 			throw new DcmException(DcmExceptionMessage.ERROR_WATERMARK.getMessage() + unitToModify.toString(), e);
 		}
 		
+		createTrace(TraceEventEnum.WATERMARK_LOGO, unitToModify);
+		
 		logger.trace(TRACE_EX_END);
 		
 		return unitToModify;
@@ -122,6 +139,29 @@ public class DcmWatermark implements DcmStrategy {
 	@Override
 	public boolean getOverwriteOriginalFile() {
 		return overwriteOriginalFile;
+	}
+	
+	/**
+	 * Create watermark event trace
+	 * @param unit
+	 */
+	private void createTrace(TraceEventEnum traceEvent, DcmUnit unit) {
+		TraceDto trace = new TraceDto();
+		trace.setTraceCreationDateTime(LocalDateTime.now());
+		trace.setTraceEvent(traceEvent.getType());
+		trace.setImagePathStr(this.imagePath.toString());
+		if(unit.getInFilePath() != null) {
+			trace.setInputFilePathStr(unit.getInFilePath().toString());
+		}
+		if(unit.getOutFilePath() != null) {
+			trace.setOutputFilePathStr(unit.getOutFilePath().toString());
+		}
+		
+		try {
+			this.traceDao.createTrace(trace);
+		} catch (Exception e) {
+			logger.debug(trace.toString());
+		}
 	}
 
 }
