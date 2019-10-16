@@ -33,6 +33,7 @@ public class WatchDirTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -40,7 +41,8 @@ public class WatchDirTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			watchDir = new WatchDir(dir, recursive, dcmManager);
 		} catch (DcmException de) {
 			fail();
@@ -60,13 +62,15 @@ public class WatchDirTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		dcmManager = new DcmManager(
 				changePatientIdValue,
 				changePatientIdOverwriteOriginalFile,
 				inFilename,
 				inFolderAbsolutePathStr,
 				outFilenameSuffix,
-				outFolderAbsolutePathStr);
+				outFolderAbsolutePathStr,
+				imagePath.toString());
 		try {
 			watchDir = new WatchDir(dir, recursive, dcmManager);
 			fail();
@@ -88,13 +92,15 @@ public class WatchDirTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		dcmManager = new DcmManager(
 				changePatientIdValue,
 				changePatientIdOverwriteOriginalFile,
 				inFilename,
 				inFolderAbsolutePathStr,
 				outFilenameSuffix,
-				outFolderAbsolutePathStr);
+				outFolderAbsolutePathStr,
+				imagePath.toString());
 		try {
 			watchDir = new WatchDir(dir, recursive, dcmManager);
 			fail();

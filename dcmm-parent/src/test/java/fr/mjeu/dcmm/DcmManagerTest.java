@@ -38,6 +38,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -45,7 +46,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 		} catch (DcmException de) {
 			fail();
 		}
@@ -72,7 +74,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_change_patient_id_value_null_KO() {
+	public void testConstructor_change_patient_id_value_null_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = null;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -80,6 +82,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -87,7 +90,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -96,7 +100,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_change_patient_id_value_empty_KO(){
+	public void testConstructor_change_patient_id_value_empty_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = "";
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -104,6 +108,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -111,7 +116,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -128,6 +134,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -135,7 +142,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 		} catch (DcmException de) {
 			fail();
 		}
@@ -155,6 +163,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -162,7 +171,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 		} catch (DcmException de) {
 			fail();
 		}
@@ -182,6 +192,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -189,7 +200,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -200,7 +212,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_file_not_exists_KO() {
+	public void testConstructor_file_not_exists_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -208,6 +220,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -215,7 +228,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 
 			fail();
 		} catch (DcmException de) {
@@ -233,6 +247,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -240,7 +255,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 		} catch (DcmException de) {
 			// nothing
 		}
@@ -272,6 +288,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -279,7 +296,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 		} catch (DcmException de) {
 			// nothing
 		}
@@ -303,7 +321,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_folder_not_exists_KO() {
+	public void testConstructor_folder_not_exists_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -311,6 +329,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr + "_ko";
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -318,7 +337,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -327,7 +347,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_folder_null_KO() {
+	public void testConstructor_folder_null_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -335,6 +355,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = null;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -342,7 +363,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -351,7 +373,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testConstructor_folder_empty_KO() {
+	public void testConstructor_folder_empty_KO() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -359,6 +381,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = "";
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -366,7 +389,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			fail();
 		} catch (DcmException de) {
 			// nothing
@@ -375,7 +399,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 	}
 	
 	@Test
-	public void testExecute_manual_mode_OK() {
+	public void testExecute_manual_mode_OK() throws DcmException {
 		DcmManager dcmManager = null;
 		String changePatientIdValue = TEST_CHANGE_PATIENT_ID_VALUE_TAG;
 		String changePatientIdOverwriteOriginalFile = "true";
@@ -383,6 +407,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = OUT_FILENAME_SUFFIX;
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		try {
 			dcmManager = new DcmManager(
 					changePatientIdValue,
@@ -390,7 +415,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			dcmManager.execute();
 		} catch (DcmException de) {
 			fail();
@@ -407,6 +433,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = "";
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		
 		DcmUnit expectedDcmUnit = null;
 		Path expectedOutFilePath = null;
@@ -422,7 +449,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 					inFilename,
 					inFolderAbsolutePathStr,
 					outFilenameSuffix,
-					outFolderAbsolutePathStr);
+					outFolderAbsolutePathStr,
+					imagePath.toString());
 			inFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_28_MO);
 			
 			// process
@@ -466,6 +494,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = "";
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		Path inFilePath = null;
 		dcmManager = new DcmManager(
 				changePatientIdValue,
@@ -473,7 +502,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 				inFilename,
 				inFolderAbsolutePathStr,
 				outFilenameSuffix,
-				outFolderAbsolutePathStr);
+				outFolderAbsolutePathStr,
+				imagePath.toString());
 		try {
 			dcmManager.notifyInputFileToProcess(inFilePath);
 			fail();
@@ -492,6 +522,7 @@ public class DcmManagerTest extends DcmPrepareTest {
 		String inFolderAbsolutePathStr = workFolderPathStr;
 		String outFilenameSuffix = "";
 		String outFolderAbsolutePathStr = outFolderPathStr;
+		Path imagePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_LOGO);
 		Path inFilePath = DcmFileUtil.getPath(workFolderPathStr, FILENAME_EXAMPLE_28_MO + "ko");
 		dcmManager = new DcmManager(
 				changePatientIdValue,
@@ -499,7 +530,8 @@ public class DcmManagerTest extends DcmPrepareTest {
 				inFilename,
 				inFolderAbsolutePathStr,
 				outFilenameSuffix,
-				outFolderAbsolutePathStr);
+				outFolderAbsolutePathStr,
+				imagePath.toString());
 		try {
 			dcmManager.notifyInputFileToProcess(inFilePath);
 			fail();
