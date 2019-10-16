@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import fr.mjeu.dcmm.exception.DcmException;
 
 @SpringBootApplication
-public class DcmApplication {
+public class DcmApplication extends SpringBootServletInitializer {
 	
 	static Logger logger = LoggerFactory.getLogger(DcmApplication.class);
 	
