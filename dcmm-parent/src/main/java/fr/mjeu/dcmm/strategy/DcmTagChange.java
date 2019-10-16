@@ -109,6 +109,8 @@ public class DcmTagChange implements DcmStrategy {
 		try {
 			this.traceDao.createTrace(trace);
 		} catch (Exception e) {
+			// if any exception arrises, it logs trace not monitored in database
+			// it's a choice to be able to use application even if no database is up
 			logger.debug(trace.toString());
 		}
 	}

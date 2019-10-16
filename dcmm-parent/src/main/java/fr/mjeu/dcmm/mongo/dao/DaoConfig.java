@@ -27,6 +27,9 @@ public class DaoConfig {
 	@Value( "${mongo.database}" )
 	private String mongoDatabase;
 	
+	@Value( "${dcm.mongo.modifications.tracking}" )
+	private String dcmMongoModificationsTracking;
+	
 	@Bean
 	public MongoDbFactory mongoDbFactory() {
 		MongoClient mongoClient = new MongoClient(mongoServer, mongoPort);

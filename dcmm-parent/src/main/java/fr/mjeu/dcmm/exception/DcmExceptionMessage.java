@@ -9,6 +9,7 @@ package fr.mjeu.dcmm.exception;
 public enum DcmExceptionMessage {
 	ERROR_ADD_NULL_STRATEGY("Strategy is null."),
 	ERROR_ATTRIBUTES_NULL("Attributes are null."),
+	ERROR_MONGO_MODIFICATIONS_TRACKING_NOT_CONFIGURED("Mongo modifications tracking is not configured."),
 	ERROR_DCM_UNIT_NOT_VALID("DcmUnit not valid."),
 	ERROR_FILENAME_EXTENSION_DCM("Expected : .dcm ; File format of this filename is not recognized : "),
 	ERROR_FILENAME_EXTENSION_PNG("Expected : .png ; File format of this filename is not recognized : "),
