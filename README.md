@@ -28,8 +28,8 @@ However, we can follow these steps to modify a DICOM with the application within
 
 Once the war is generated, those commands enable us to launch the app in a docker container, from the folder which contains Dockerfile :
 
-> docker build -t dcmm1 .
-> docker run -p 8888:8080 -v /vagrant/dcmm/git/dcmm/dcmm-resources:/vagrant/dcmm/git/dcmm/dcmm-resources:rw dcmm1:latest
+docker build -t dcmm1 .
+
+docker run -p 8888:8080 -v /vagrant/dcmm/git/dcmm/dcmm-resources:/vagrant/dcmm/git/dcmm/dcmm-resources:rw dcmm1:latest
 
 Note : The application is launched, however it's not fully operational because the docker container has not access to the image to include in DICOM.
-
