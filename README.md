@@ -24,7 +24,7 @@ The application can be built following these steps :
 
 ### From Eclipse
 
-1. Adapt properties located in src/main/resources/application.properties (especially because of the choosen use absolute paths).
+1. Adapt properties located in src/main/resources/application.properties (especially because of the choosen use of absolute paths).
 2. Run the main method src/main/java/fr/mjeu/dcmm/DcmApplication.java.
 3. The application should run with success.
 
@@ -36,6 +36,9 @@ Near this readme.md, config-samples are provided, where DCMM_HOME was /Users/Max
 
 1. Adapt [DCMM_HOME] in both application.properties and logback.xml
 2. Launch following command from command line, in the target folder :
+
 java -jar -Dspring.config.location="[DCMM_HOME]/application.properties" dcmm-parent-version.jar
+
 Example :
+
 java -jar -Dspring.config.location="/Users/Maxime/Desktop/dcmm/application.properties" dcmm-parent-0.0.3-SNAPSHOT.jar
