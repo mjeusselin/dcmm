@@ -16,7 +16,8 @@ import com.mongodb.MongoClient;
 @Configuration
 @ComponentScan(basePackages = {"fr.mjeu.dcmm"})
 @EnableMongoRepositories(basePackages = {"fr.mjeu.dcmm"})
-@PropertySource("classpath:application.properties")
+@PropertySource(value="classpath:application.properties", ignoreResourceNotFound=true)
+@PropertySource(value="file:${spring.config.location}", ignoreResourceNotFound=true)
 public class DaoConfig {
 	@Value( "${mongo.server}" )
 	private String mongoServer;
