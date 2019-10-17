@@ -32,4 +32,4 @@ docker build -t dcmm1 .
 
 docker run -p 8888:8080 -v /vagrant/dcmm/git/dcmm/dcmm-resources:/vagrant/dcmm/git/dcmm/dcmm-resources:rw dcmm1:latest
 
-Note : The application is launched, however it's not fully operational because the docker container has not access to the image to include in DICOM.
+Note : The application is launched, the input DICOM is processed with patient id tag change and PNG inclusion and modifications are saved into an output file. Tracking modifications in database is disabled because no mongoDB has been configured to work with this docker container.
