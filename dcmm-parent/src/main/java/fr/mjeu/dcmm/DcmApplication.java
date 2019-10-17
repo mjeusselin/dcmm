@@ -49,6 +49,9 @@ public class DcmApplication extends SpringBootServletInitializer {
 	@Value( "${dcm.out.filename.suffix}" )
 	private String outFilenameSuffix;
 	
+	@Value( "${dcm.watermark.png.logo.absolute.path.str}" )
+	private String watermarkPngLogoAbsolutePathStr;
+	
 	private static int status = STATUS_INIT;
 	
 	public static void main(String[] args) {
@@ -74,7 +77,8 @@ public class DcmApplication extends SpringBootServletInitializer {
 	            		inFilename,
 	            		inFolderAbsolutePathStr,
 	            		outFilenameSuffix,
-	            		outFolderAbsolutePathStr);
+	            		outFolderAbsolutePathStr,
+	            		watermarkPngLogoAbsolutePathStr);
 	            logger.debug(DEBUG_DCMM_EXECUTION);
 	            dcmm.execute();
 	            status = STATUS_SUCCESS;

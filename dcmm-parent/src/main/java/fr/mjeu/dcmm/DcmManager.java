@@ -2,7 +2,6 @@ package fr.mjeu.dcmm;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import fr.mjeu.dcmm.strategy.DcmStrategy;
 import fr.mjeu.dcmm.strategy.DcmTagChange;
 import fr.mjeu.dcmm.strategy.DcmWatermark;
 import fr.mjeu.dcmm.util.CheckerUtil;
+import fr.mjeu.dcmm.util.DcmFileUtil;
 import fr.mjeu.dcmm.util.DcmOutFilePathUtil;
 
 public class DcmManager {
@@ -29,9 +29,6 @@ public class DcmManager {
 	private static final String TRACE_EXECUTE_BEGIN = "begin execute";
 	private static final String TRACE_EXECUTE_END = "end execute";
 	
-	private static String S = File.separator;
-	protected static String RELATIVE_PATH_LOGO = "src"+S+"main"+S+"resources"+S+"images"+S+"herami-logo.png";
-	
 	private String changePatientIdValue;
 	private boolean changePatientIdOverwriteOriginalFile = false;
 	private Path inFilePath;
@@ -39,6 +36,7 @@ public class DcmManager {
 	private boolean manualMode = false;
 	private String outFilenameSuffix;
 	private Path outFolderPath;
+	private Path watermarkPngLogoAbsolutePath;
 	
 	public DcmManager(
 			String changePatientIdValue,
@@ -46,7 +44,8 @@ public class DcmManager {
 			String inFilename,
 			String inFolderAbsolutePathStr,
 			String outFilenameSuffix,
-			String outFolderAbsolutePathStr) throws DcmException {
+			String outFolderAbsolutePathStr,
+			String watermarkPngLogoAbsolutePathStr) throws DcmException {
 		
 		this.detectChangePatientIdValue(changePatientIdValue);
 		
@@ -63,6 +62,7 @@ public class DcmManager {
 		
 		this.detectOutFolderPath(outFolderAbsolutePathStr);
 		
+		this.detectWatermarkPngLogoAbsolutePath(watermarkPngLogoAbsolutePathStr);
 		
 	}
 	
@@ -115,8 +115,7 @@ public class DcmManager {
 		db.addStrategy(tagChangeStrategy);
 		
 		// add strategy which watermarks png image vertically centered on the right border
-		Path imagePath = Paths.get(RELATIVE_PATH_LOGO);
-		DcmStrategy watermarkLogoStrategy = new DcmWatermark(imagePath);
+		DcmStrategy watermarkLogoStrategy = new DcmWatermark(this.watermarkPngLogoAbsolutePath);
 		db.addStrategy(watermarkLogoStrategy);
 		
 		logger.debug(DEBUG_BUILD + inFilePath.toString());
@@ -212,6 +211,16 @@ public class DcmManager {
 			logger.debug(DEBUG_OUT_FILENAME_SUFFIX_NULL);
 			this.outFilenameSuffix = "";
 		}
+	}
+	
+	/**
+	 * Check watermarkPngLogoAbsolutePathStr and add watermarkPngLogoAbsolutePath to DcmManager attributes
+	 * @param watermarkPngLogoAbsolutePathStr
+	 * @throws DcmException
+	 */
+	private void detectWatermarkPngLogoAbsolutePath(String watermarkPngLogoAbsolutePathStr) throws DcmException {
+		File watermarkPngLogoFile = DcmFileUtil.getFileFromPathStr(watermarkPngLogoAbsolutePathStr);
+		this.watermarkPngLogoAbsolutePath = watermarkPngLogoFile.toPath();
 	}
 
 	/**
