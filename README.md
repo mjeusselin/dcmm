@@ -36,6 +36,6 @@ Near this readme.md, config-samples are provided, where DCMM_HOME was /Users/Max
 
 1. Adapt [DCMM_HOME] in both application.properties and logback.xml
 2. Launch following command from command line, in the target folder :
-java -jar -Dspring.config.location="/Users/Maxime/Desktop/dcmm/application.properties" dcmm-parent-0.0.3-SNAPSHOT.jar
-Example :
 java -jar -Dspring.config.location="[DCMM_HOME]/application.properties" dcmm-parent-version.jar
+Example :
+java -jar -Dspring.config.location="/Users/Maxime/Desktop/dcmm/application.properties" dcmm-parent-0.0.3-SNAPSHOT.jar
